@@ -1,0 +1,25 @@
+{
+  "name": "RecallNG - Constituency Accountability Platform",
+  "short_name": "RecallNG",
+  "description": "A Nigerian civic platform for lawful legislative recall campaigns, constituent organization and representative accountability.",
+  "lang": "en-NG",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#059669",
+  "icons": [
+    {
+      "src": "assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
