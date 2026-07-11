@@ -1240,7 +1240,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js"></script>
 <script>
-const WINNERS_DATABASE_URL='recallng_winners.sqlite3';
+const WINNERS_DATABASE_URL='database/recallng_winners.sqlite3';
 const SQL_JS_CDN='https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/';
 const POLLING_DATA_URL='https://raw.githubusercontent.com/afeibukun/nigerian-state-lgas-wards-polling-units/refs/heads/main/states-and-lgas-and-wards-and-polling-units.json';
 const GEOJSON_URL='https://raw.githubusercontent.com/wmgeolab/geoBoundaries/main/releaseData/gbOpen/NGA/ADM1/geoBoundaries-NGA-ADM1.geojson';
@@ -1529,10 +1529,12 @@ $('wardSelect').onchange=e=>{
 
 
 function normalizeStateKey(value){
-  return String(value||'').toLowerCase().trim()
+  const normalized=String(value||'').toLowerCase().trim()
     .replace(/&/g,'and')
     .replace(/[^a-z0-9]+/g,'-')
     .replace(/^-+|-+$/g,'');
+  if(['fct','abuja','federal-capital-territory','federal-capital-territory-abuja'].includes(normalized))return 'fct';
+  return normalized;
 }
 
 
@@ -1590,10 +1592,14 @@ function getRepresentativeRecords(){
   if(office==='House of Representatives'){
     const houseDistrict=location.house;
     const lgas=districtLGAs(state,'house',houseDistrict);
+    const matchingLga=state==='fct'&&normalizeWords(lga)==='abuja municipal'?'amac':lga;
     return databaseHouseRepresentatives
       .filter(r=>normalizeStateKey(r.state)===state)
-      .filter(r=>normalizeWords(r.constituency)===normalizeWords(houseDistrict) ||
-                 lgaMatchesConstituency(lga,r.constituency))
+      .filter(r=>(state==='fct'&&(
+                   (normalizeWords(houseDistrict).includes('abuja municipal')&&normalizeWords(r.constituency).includes('amac'))||
+                   (normalizeWords(houseDistrict).includes('kuje abaji gwagwalada kwali')&&r.sn===360)
+                 ))||normalizeWords(r.constituency)===normalizeWords(houseDistrict) ||
+                 lgaMatchesConstituency(matchingLga,r.constituency))
       .map(r=>({
         id:`house-${r.sn}`,
         name:r.candidate,
@@ -1613,7 +1619,7 @@ function getRepresentativeRecords(){
     const lgas=districtLGAs(state,'senate',senateDistrict);
     return databaseSenators
       .filter(r=>normalizeStateKey(r.state)===state)
-      .filter(r=>normalizeWords(r.district)===districtSuffix || normalizeWords(`${r.state} ${r.district}`)===normalizeWords(senateDistrict))
+      .filter(r=>state==='fct' || normalizeWords(r.district)===districtSuffix || normalizeWords(`${r.state} ${r.district}`)===normalizeWords(senateDistrict))
       .map(r=>({
         id:`senate-${r.sn}`,
         name:r.candidate,
