@@ -1031,6 +1031,15 @@
 
     .field-error { border-color:var(--danger) !important; box-shadow:0 0 0 4px rgba(239,68,68,.1) !important; }
     .error-text { display:block; color:var(--danger); font-size:12px; margin-top:6px; font-weight:600; }
+    .legal-consent { display:flex; gap:10px; align-items:flex-start; margin-top:14px; font-weight:500; line-height:1.55; }
+    .legal-consent input { width:auto; flex:0 0 auto; margin-top:4px; }
+    .legal-consent a { color:var(--primary); font-weight:800; text-decoration:underline; text-underline-offset:2px; }
+    .legal-consent a:hover { color:var(--primary-hover); }
+    .legal-document { max-height:min(68vh,720px); overflow-y:auto; padding-right:10px; }
+    .legal-document h3 { margin:24px 0 7px; font-size:16px; }
+    .legal-document p,.legal-document li { color:var(--text-muted); font-size:13px; line-height:1.7; }
+    .legal-document ul { padding-left:20px; }
+    .legal-effective { display:inline-block; margin-bottom:8px; color:var(--primary); font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:.7px; }
 
     .leaflet-pane,.leaflet-control,.leaflet-top,.leaflet-bottom { z-index:400 !important; }
     .modal .leaflet-pane,.modal .leaflet-control { z-index:1 !important; }
@@ -1538,7 +1547,7 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
 <div class="grid grid-4" style="margin-top:17px"><div class="detail-metric"><small class="muted">Petition signatures</small><strong id="detailVotes">0</strong></div><div class="detail-metric"><small class="muted">Estimated petition threshold</small><strong id="detailThreshold">0</strong></div><div class="detail-metric"><small class="muted">Progress</small><strong id="detailProgress">0%</strong></div><div class="detail-metric"><small class="muted">Remaining</small><strong id="detailRemaining">0</strong></div>
     <div class="detail-metric"><small class="muted">2023 avg. voters per PU</small><strong id="detailAvgPerPU">0</strong></div></div>
 <div class="grid grid-2" style="margin-top:17px;align-items:start"><div class="grid"><div class="card"><h3>Recall progress</h3><p class="muted">Progress toward the petition threshold entered for the constituency.</p><div class="progress" style="height:16px"><span id="detailProgressBar" style="width:0%"></span></div><div style="display:flex;justify-content:space-between"><span id="detailProgressText">0 of 0</span><strong id="detailStatusText">Organizing</strong></div></div><div class="card"><h3>Campaign analytics</h3><div class="chart-wrap"><canvas id="detailCampaignChart"></canvas></div></div><div class="card"><h3>Support by polling unit</h3><div class="chart-wrap"><canvas id="detailPollingChart"></canvas></div></div><div class="card"><h3>Campaign evidence and grounds</h3><p id="detailGrounds" class="muted"></p></div></div>
-<div class="card support-panel"><span class="badge">SIGN PETITION</span><h2>Support this recall</h2><p class="muted">Your support counts only after you provide your voter details, polling unit and signature.</p><div class="notice warning">This is a petition signature, not the official INEC referendum vote. The details remain subject to INEC verification.</div><form id="detailSupportForm" style="margin-top:17px"><div class="form-row"><label>Full name</label><input id="supportName" required></div><div class="form-grid"><div class="form-row"><label>VIN</label><input id="supportVIN" required minlength="8"></div><div class="form-row"><label>Date of birth</label><input id="supportDOB" type="date" required></div></div><div class="form-row"><label>Phone number</label><input id="supportPhone" type="text" inputmode="numeric" pattern="[0-9]{11}" minlength="11" maxlength="11" required placeholder="08012345678"></div><div class="form-grid"><div class="form-row"><label>State</label><select id="supportState" required></select></div><div class="form-row"><label>LGA</label><select id="supportLGA" required disabled></select></div><div class="form-row"><label>Ward</label><select id="supportWard" required disabled></select></div><div class="form-row"><label>Polling unit</label><select id="supportPolling" required disabled></select></div></div><div class="signature-box"><label>Signature</label><canvas id="supportSignatureCanvas" width="700" height="180"></canvas><button class="btn btn-light btn-small" type="button" id="clearSupportSignature">Clear signature</button></div><label style="display:flex;gap:9px;align-items:flex-start;font-weight:500;margin-top:14px"><input type="checkbox" style="width:auto;margin-top:3px" required>I confirm that I am the named registered voter and authorize my details and signature to be included in the petitioners’ schedule.</label><button class="btn btn-primary" type="submit" style="width:100%;margin-top:15px">Sign and count my support</button></form></div></div></section>
+<div class="card support-panel"><span class="badge">SIGN PETITION</span><h2>Support this recall</h2><p class="muted">Your support counts only after you provide your voter details, polling unit and signature.</p><div class="notice warning">This is a petition signature, not the official INEC referendum vote. The details remain subject to INEC verification.</div><form id="detailSupportForm" style="margin-top:17px"><div class="form-row"><label>Full name</label><input id="supportName" required></div><div class="form-grid"><div class="form-row"><label>VIN</label><input id="supportVIN" required minlength="8"></div><div class="form-row"><label>Date of birth</label><input id="supportDOB" type="date" required></div></div><div class="form-row"><label>Phone number</label><input id="supportPhone" type="text" inputmode="numeric" pattern="[0-9]{11}" minlength="11" maxlength="11" required placeholder="08012345678"></div><div class="form-grid"><div class="form-row"><label>State</label><select id="supportState" required></select></div><div class="form-row"><label>LGA</label><select id="supportLGA" required disabled></select></div><div class="form-row"><label>Ward</label><select id="supportWard" required disabled></select></div><div class="form-row"><label>Polling unit</label><select id="supportPolling" required disabled></select></div></div><div class="signature-box"><label>Signature</label><canvas id="supportSignatureCanvas" width="700" height="180"></canvas><button class="btn btn-light btn-small" type="button" id="clearSupportSignature">Clear signature</button></div><label style="display:flex;gap:9px;align-items:flex-start;font-weight:500;margin-top:14px"><input type="checkbox" style="width:auto;margin-top:3px" required>I confirm that I am the named registered voter and authorize my details and signature to be included in the petitioners’ schedule.</label><label class="legal-consent"><input id="supportLegalConsent" type="checkbox" required><span>I have read and agree to the <a href="#termsModal" data-open-legal="termsModal">Terms &amp; Conditions</a> and the <a href="#privacyModal" data-open-legal="privacyModal">NDPR Privacy Notice</a>.</span></label><button class="btn btn-primary" type="submit" style="width:100%;margin-top:15px">Sign and count my support</button></form></div></div></section>
 <section class="page" id="analyticsPage">
   <div class="section-title"><div><h2>Campaign analytics</h2><span class="muted">Informative charts suitable for campaign reporting and dashboard screenshots.</span></div><button class="btn btn-light" id="exportAnalytics">Download analytics screenshot</button></div>
   <div class="grid grid-2">
@@ -1747,6 +1756,7 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
       <div class="form-row"><label>Select registered constituent</label><select id="voteVoterSelect" required></select></div>
       <div class="notice warning">Your support is a campaign petition record. It is not the INEC referendum vote and remains subject to INEC verification.</div>
       <label style="display:flex;gap:9px;align-items:flex-start;font-weight:500;margin-top:14px"><input type="checkbox" style="width:auto;margin-top:3px" required>I support this petition for recall and authorize my registered details and signature to be included in the official petitioners’ schedule.</label>
+      <label class="legal-consent"><input id="voteLegalConsent" type="checkbox" required><span>I have read and agree to the <a href="#termsModal" data-open-legal="termsModal">Terms &amp; Conditions</a> and the <a href="#privacyModal" data-open-legal="privacyModal">NDPR Privacy Notice</a>.</span></label>
       <button class="btn btn-primary" type="submit" style="width:100%;margin-top:14px">Sign recall petition</button>
     </form>
   </div>
@@ -1777,6 +1787,58 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
       <button class="btn btn-light" id="shareSupportBtn">Share my support</button>
     </div>
     <p class="privacy" style="margin-top:14px">Shared messages do not expose VIN, date of birth, phone number or signature.</p>
+  </div>
+</div>
+
+<div class="modal" id="termsModal" role="dialog" aria-modal="true" aria-labelledby="termsTitle">
+  <div class="modal-card" style="width:min(760px,100%)">
+    <div class="modal-head">
+      <div><span class="legal-effective">Effective 12 July 2026</span><h2 id="termsTitle" style="margin:0">Terms &amp; Conditions</h2></div>
+      <button class="icon-close" type="button" data-close-legal aria-label="Close terms">×</button>
+    </div>
+    <div class="legal-document">
+      <p>These terms govern the use of RecallNG to organize constituency records for a proposed legislative recall. By supporting a campaign, you agree to the following conditions.</p>
+      <h3>1. Eligibility and truthful information</h3>
+      <ul><li>You must be at least 18 years old and provide only your own accurate voter information.</li><li>You may support only a campaign within the constituency or legislative jurisdiction in which you are registered.</li><li>You must not impersonate another voter, submit duplicate support, manipulate campaign totals or provide a false signature.</li></ul>
+      <h3>2. Nature of platform support</h3>
+      <p>A signature recorded on RecallNG is a petition-support record. It does not itself recall a legislator, constitute INEC verification or replace any official referendum, biometric verification or other legal requirement.</p>
+      <h3>3. Authorization</h3>
+      <p>You authorize your submitted details and signature to be included in the relevant campaign’s protected petitioners’ schedule and, where lawfully required, presented to authorized campaign organizers, legal reviewers or INEC for verification and submission.</p>
+      <h3>4. Lawful and responsible use</h3>
+      <p>You must not use RecallNG to threaten, harass, defame, discriminate, upload unlawful material or interfere with the platform. Campaign allegations remain the responsibility of their authors and should be supported by verifiable evidence.</p>
+      <h3>5. Accuracy and availability</h3>
+      <p>Representative and electoral information is compiled from available official records. RecallNG may correct data, moderate unlawful content or suspend abusive activity. The service is provided as civic-organizing infrastructure and is not legal advice.</p>
+      <h3>6. Changes</h3>
+      <p>These terms may be updated to reflect legal, security or platform changes. Material updates should be displayed before further consent is collected.</p>
+    </div>
+    <button class="btn btn-primary" type="button" data-close-legal style="width:100%;margin-top:18px">I understand</button>
+  </div>
+</div>
+
+<div class="modal" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+  <div class="modal-card" style="width:min(760px,100%)">
+    <div class="modal-head">
+      <div><span class="legal-effective">NDPR / Nigeria Data Protection Act notice</span><h2 id="privacyTitle" style="margin:0">Privacy Notice</h2></div>
+      <button class="icon-close" type="button" data-close-legal aria-label="Close privacy notice">×</button>
+    </div>
+    <div class="legal-document">
+      <p>This notice explains how RecallNG handles personal data in connection with campaign support, consistently with the Nigeria Data Protection Regulation 2019 and the Nigeria Data Protection Act 2023.</p>
+      <h3>1. Data collected</h3>
+      <p>RecallNG may collect your name, VIN, date of birth, phone number, state, LGA or Area Council, ward, polling unit, signature, consent record and campaign participation.</p>
+      <h3>2. Why the data is used</h3>
+      <ul><li>To determine whether you belong to the relevant constituency.</li><li>To prevent duplicate or unauthorized petition support.</li><li>To arrange petitioners by electoral geography and prepare campaign records for review and official verification.</li><li>To produce public campaign totals and analytics without publicly displaying your sensitive identity fields.</li></ul>
+      <h3>3. Legal basis and consent</h3>
+      <p>Data submitted through the support form is processed with your affirmative consent and for the specific civic purpose described here. You may decline by not submitting the form.</p>
+      <h3>4. Storage and disclosure</h3>
+      <p>In this browser-based build, voter and campaign records are stored locally in your browser unless they are exported or deliberately shared. Petition records may be disclosed only to authorized campaign personnel, professional advisers, service providers acting under appropriate safeguards, INEC or another recipient required by law. RecallNG must not sell voter data or use it for unrelated political targeting.</p>
+      <h3>5. Security and retention</h3>
+      <p>Reasonable technical and organizational safeguards should be used to protect exported or deployed records. Personal data should be retained only as long as necessary for the campaign, verification, legal obligations and dispute handling, then securely deleted or anonymized.</p>
+      <h3>6. Your rights</h3>
+      <p>Subject to applicable law, you may request access, correction, deletion, restriction, objection, portability or withdrawal of consent. Withdrawal does not invalidate processing already lawfully completed and may be limited where records must be preserved for a legal claim or official petition process.</p>
+      <h3>7. Regulatory information</h3>
+      <p>Learn more from the <a href="https://ndpc.gov.ng/download/nigeria-data-protection-act-2023" target="_blank" rel="noopener noreferrer" style="color:var(--primary);font-weight:800">Nigeria Data Protection Commission’s official NDP Act resource</a>. The operator of any public RecallNG deployment is responsible for publishing its identity and privacy contact details.</p>
+    </div>
+    <button class="btn btn-primary" type="button" data-close-legal style="width:100%;margin-top:18px">I understand</button>
   </div>
 </div>
 
@@ -2583,6 +2645,16 @@ function closeModal(modal){
 document.querySelectorAll('.modal').forEach(modal=>{
   modal.addEventListener('click',e=>{if(e.target===modal)closeModal(modal)});
 });
+document.querySelectorAll('[data-open-legal]').forEach(link=>{
+  link.addEventListener('click',e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    openModal($(link.dataset.openLegal));
+  });
+});
+document.querySelectorAll('[data-close-legal]').forEach(button=>{
+  button.addEventListener('click',()=>closeModal(button.closest('.modal')));
+});
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape'){
     const open=[...document.querySelectorAll('.modal.open')].pop();
@@ -2784,10 +2856,12 @@ window.openVote=id=>{
   $('voteVoterSelect').innerHTML=eligible.length
     ?'<option value="">Select constituent</option>'+eligible.map(v=>`<option value="${v.id}">${escapeHTML(v.name)} — ${maskVIN(v.vin)} — ${titleCase(v.lga)} · ${titleCase(v.pollingUnit)}</option>`).join('')
     :'<option value="">No registered constituents in this jurisdiction</option>';
+  $('voteLegalConsent').checked=false;
   openModal(voteModal);
 };
 $('voteForm').onsubmit=e=>{
   e.preventDefault();
+  if(!$('voteLegalConsent').checked){showNotification('Read and accept the Terms & Conditions and Privacy Notice before supporting this campaign.','error','Consent required');return}
   const campaigns=getData('recallng_campaigns'),campaign=campaigns.find(c=>c.id===$('voteCampaignId').value);
   const voterId=$('voteVoterSelect').value;
   const voter=getData('recallng_voters').find(v=>v.id===voterId);
@@ -3075,6 +3149,7 @@ $('detailSupportForm').onsubmit=e=>{
   const campaigns=getData('recallng_campaigns');
   const c=campaigns.find(x=>x.id===activeDetailCampaignId);
   if(!c)return;
+  if(!$('supportLegalConsent').checked){showNotification('Read and accept the Terms & Conditions and Privacy Notice before submitting your support.','error','Consent required');return}
   if(!supportSignatureData){showNotification('Please sign before submitting.','error');return}
 
   const vin=$('supportVIN').value.trim().toUpperCase();
