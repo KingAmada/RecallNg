@@ -1072,12 +1072,12 @@
 .home-page{max-width:1280px;margin:0 auto}
 .home-navline{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
 .home-kicker{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid #bbf7d0;background:#ecfdf5;color:#047857;border-radius:999px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px}
-.home-hero{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:48px;align-items:center;min-height:610px;padding:62px;border-radius:32px;overflow:hidden;background:linear-gradient(135deg,#022c22 0%,#064e3b 46%,#059669 100%);box-shadow:0 30px 70px -25px rgba(2,44,34,.48);color:#fff}
-.home-hero:before{content:"";position:absolute;width:520px;height:520px;right:-170px;top:-230px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 68%)}
-.home-hero:after{content:"";position:absolute;width:420px;height:420px;left:-230px;bottom:-260px;border-radius:50%;background:radial-gradient(circle,rgba(52,211,153,.22),transparent 70%)}
+.home-hero{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:88px;align-items:center;min-height:610px;padding:78px 8px 70px;color:var(--text-main)}
+.home-hero:before{content:"";position:absolute;width:420px;height:420px;right:3%;top:40px;border-radius:50%;background:radial-gradient(circle,rgba(16,185,129,.10),transparent 68%);pointer-events:none}
+.home-hero:after{content:"";position:absolute;left:8px;right:8px;bottom:0;height:1px;background:linear-gradient(90deg,#10b981,rgba(16,185,129,.16),transparent);pointer-events:none}
 .home-copy,.home-proof{position:relative;z-index:1}
-.home-copy h1{font-size:clamp(46px,6.5vw,82px);line-height:.97;letter-spacing:-4px;margin:18px 0 24px;max-width:790px}
-.home-copy h1 em{font-style:normal;color:#6ee7b7}
+.home-copy h1{font-size:clamp(50px,6.5vw,88px);line-height:.95;letter-spacing:-4.5px;margin:18px 0 24px;max-width:860px;color:#0f172a}
+.home-copy h1 em{font-style:normal;color:#047857}
 .hero-quote-stage{
   position:relative;
   display:grid;
@@ -1116,32 +1116,44 @@
   border:0;
   border-radius:999px;
   padding:0;
-  background:rgba(255,255,255,.28);
+  background:#cbd5e1;
   transition:width .32s ease,background .32s ease,transform .32s ease;
 }
-.hero-quote-progress button:hover{transform:scale(1.2);background:rgba(255,255,255,.65)}
-.hero-quote-progress button.active{width:26px;background:#fff}
+.hero-quote-progress button:hover{transform:scale(1.2);background:#6ee7b7}
+.hero-quote-progress button.active{width:26px;background:#059669}
 @media(max-width:700px){
   .hero-quote-stage{min-height:210px}
 }
 @media(prefers-reduced-motion:reduce){
-  .hero-quote-enter,.hero-quote-exit{animation:none}
+  .hero-quote-enter,.hero-quote-exit,.orbit-ring-one,.orbit-ring-two{animation:none}
 }
 
-.home-copy>p{font-size:18px;line-height:1.75;color:#d1fae5;max-width:670px;margin:0 0 30px}
+.home-copy>p{font-size:18px;line-height:1.75;color:#64748b;max-width:700px;margin:0 0 30px}
 .home-actions{display:flex;gap:12px;flex-wrap:wrap}
 .home-actions .btn{min-height:52px}
-.home-primary{background:#fff!important;color:#064e3b!important;box-shadow:0 12px 26px rgba(0,0,0,.15)!important}
-.home-secondary{background:rgba(255,255,255,.10)!important;color:#fff!important;border:1px solid rgba(255,255,255,.25)!important;backdrop-filter:blur(8px)}
-.home-trustline{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px;color:#a7f3d0;font-size:12px;font-weight:700}
+.home-primary{background:#059669!important;color:#fff!important;box-shadow:0 12px 26px rgba(5,150,105,.18)!important}
+.home-secondary{background:transparent!important;color:#064e3b!important;border:1px solid #a7f3d0!important}
+.home-trustline{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px;color:#047857;font-size:12px;font-weight:700}
 .home-trustline span{display:flex;align-items:center;gap:6px}
-.home-proof{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:24px;backdrop-filter:blur(16px)}
-.proof-head{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px}
-.proof-head strong{font-size:18px}.proof-live{display:inline-flex;gap:7px;align-items:center;color:#a7f3d0;font-size:11px;font-weight:800;text-transform:uppercase}.proof-live:before{content:"";width:8px;height:8px;background:#34d399;border-radius:50%;box-shadow:0 0 0 6px rgba(52,211,153,.13);animation:pulseGlow 2s infinite}
-.proof-card{background:#fff;color:#0f172a;border-radius:18px;padding:18px;margin-top:12px;box-shadow:0 12px 26px rgba(0,0,0,.10)}
-.proof-card-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.proof-card h3{margin:0 0 4px;font-size:17px}.proof-card p{margin:0;color:#64748b;font-size:12px}.proof-number{text-align:right;font-size:25px;font-weight:800;color:#047857}.proof-number small{display:block;font-size:10px;font-weight:700;color:#64748b}
-.proof-bar{height:8px;border-radius:999px;background:#e2e8f0;overflow:hidden;margin:15px 0 8px}.proof-bar span{display:block;width:54%;height:100%;background:linear-gradient(90deg,#059669,#34d399);border-radius:inherit}
-.proof-bottom{display:flex;justify-content:space-between;font-size:11px;color:#64748b}
+.home-proof{position:relative;display:grid;place-items:center;min-height:510px;padding:20px 0}
+.hero-orbit{position:relative;width:min(430px,100%);aspect-ratio:1;display:grid;place-items:center}
+.hero-orbit:before{content:"";position:absolute;inset:12%;border-radius:50%;background:radial-gradient(circle at 35% 28%,#34d399,#059669 48%,#022c22 100%);box-shadow:0 40px 90px -36px rgba(5,150,105,.7)}
+.hero-orbit:after{content:"NG";position:absolute;right:7%;bottom:16%;font-size:72px;line-height:1;font-weight:900;letter-spacing:-7px;color:rgba(5,150,105,.09)}
+.orbit-ring{position:absolute;border:1px solid rgba(5,150,105,.24);border-radius:50%}
+.orbit-ring-one{inset:2%;animation:orbitSpin 24s linear infinite}
+.orbit-ring-two{inset:22%;border-color:rgba(255,255,255,.22);animation:orbitSpin 15s linear infinite reverse}
+.orbit-ring-one:before,.orbit-ring-two:before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:#10b981;box-shadow:0 0 0 7px rgba(16,185,129,.12);left:50%;top:-5px}
+.orbit-ring-two:before{background:#fff;box-shadow:0 0 0 7px rgba(255,255,255,.12)}
+.orbit-node{position:absolute;width:12px;height:12px;border-radius:50%;background:#064e3b;border:3px solid #a7f3d0;z-index:2}
+.orbit-node-one{left:3%;top:47%}.orbit-node-two{right:8%;top:20%}.orbit-node-three{right:4%;bottom:25%}
+.hero-law-mark{position:relative;z-index:2;text-align:center;color:#fff;display:flex;flex-direction:column;align-items:center}
+.hero-law-mark small{font-size:11px;text-transform:uppercase;letter-spacing:2.4px;font-weight:800;color:#a7f3d0}
+.hero-law-mark strong{font-size:132px;line-height:.82;letter-spacing:-10px;margin:15px 10px 18px 0}
+.hero-law-mark span{padding-top:12px;border-top:1px solid rgba(255,255,255,.3);font-size:12px;text-transform:uppercase;letter-spacing:1.4px;font-weight:800}
+.hero-live-data{position:absolute;z-index:3;left:0;right:0;bottom:4px;display:flex;align-items:center;justify-content:center;gap:18px;padding:14px 18px;background:rgba(248,250,252,.88);border-top:1px solid rgba(16,185,129,.2);border-bottom:1px solid rgba(16,185,129,.2);backdrop-filter:blur(14px)}
+.hero-live-data div{min-width:88px}.hero-live-data strong{display:block;font-size:21px;line-height:1;color:#064e3b}.hero-live-data span{display:block;margin-top:6px;font-size:9px;text-transform:uppercase;letter-spacing:.7px;color:#64748b;font-weight:700}.hero-live-data i{width:1px;height:34px;background:#d1fae5}
+.hero-live-progress{position:absolute;left:0;right:0;bottom:0;height:3px;background:#d1fae5;overflow:hidden;z-index:4}.hero-live-progress span{display:block;height:100%;min-width:8%;background:linear-gradient(90deg,#059669,#34d399);transition:width .8s ease}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
 .home-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#e2e8f0;border:1px solid #e2e8f0;border-radius:24px;overflow:hidden;margin:28px 0 78px;box-shadow:var(--shadow-sm)}
 .home-stat{background:#fff;padding:27px 24px}.home-stat strong{display:block;font-size:34px;line-height:1;letter-spacing:-1.2px;color:#064e3b}.home-stat span{display:block;margin-top:9px;color:#64748b;font-size:12px;line-height:1.5}.home-stat b{font-size:10px;color:#059669;text-transform:uppercase;letter-spacing:.8px}
 .home-section{padding:30px 0 72px}.home-section-head{max-width:760px;margin-bottom:32px}.home-section-head .eyebrow{color:#059669;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;font-weight:800}.home-section-head h2{font-size:clamp(34px,4vw,52px);line-height:1.05;letter-spacing:-2px;margin:10px 0 14px}.home-section-head p{color:#64748b;font-size:16px;margin:0;line-height:1.75}
@@ -1153,12 +1165,66 @@
 .home-cta{position:relative;overflow:hidden;text-align:center;padding:60px 30px;border-radius:30px;background:linear-gradient(135deg,#022c22,#064e3b 58%,#059669);color:#fff}.home-cta h2{font-size:clamp(36px,5vw,58px);letter-spacing:-2px;line-height:1;margin:0 auto 16px;max-width:800px}.home-cta p{max-width:680px;margin:0 auto 28px;color:#d1fae5;line-height:1.7}.home-cta .home-actions{justify-content:center}
 .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.faq-item{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:21px}.faq-item h3{font-size:15px;margin:0 0 8px}.faq-item p{font-size:13px;color:#64748b;line-height:1.65;margin:0}
 .home-footer{padding:38px 0 10px;display:flex;justify-content:space-between;gap:20px;align-items:center;color:#64748b;font-size:12px}.home-footer strong{color:#064e3b}
-@media(max-width:1050px){.home-hero{grid-template-columns:1fr;padding:48px}.home-proof{max-width:720px}.home-stats{grid-template-columns:1fr 1fr}.trigger-grid{grid-template-columns:1fr 1fr}.steps-grid,.proof-logos{grid-template-columns:1fr 1fr}.loss-section{grid-template-columns:1fr}}
-@media(max-width:700px){.home-hero{padding:30px 22px;border-radius:24px;min-height:auto}.home-copy h1{font-size:48px;letter-spacing:-2.5px}.home-copy>p{font-size:15px}.home-actions{display:grid;grid-template-columns:1fr}.home-stats,.trigger-grid,.steps-grid,.proof-logos,.faq-grid{grid-template-columns:1fr}.home-stat{padding:21px}.home-section{padding-bottom:54px}.loss-section,.social-proof{padding:24px}.home-footer{flex-direction:column;align-items:flex-start}.home-trustline{gap:9px}.home-proof{padding:16px}}
+@media(max-width:1050px){.home-hero{grid-template-columns:1fr;padding:58px 8px;gap:30px}.home-proof{width:min(580px,100%);min-height:500px;margin:0 auto}.home-stats{grid-template-columns:1fr 1fr}.trigger-grid{grid-template-columns:1fr 1fr}.steps-grid,.proof-logos{grid-template-columns:1fr 1fr}.loss-section{grid-template-columns:1fr}}
+@media(max-width:700px){.home-hero{padding:38px 0;min-height:auto}.home-copy h1{font-size:48px;letter-spacing:-2.5px}.home-copy>p{font-size:15px}.home-actions{display:grid;grid-template-columns:1fr}.home-stats,.trigger-grid,.steps-grid,.proof-logos,.faq-grid{grid-template-columns:1fr}.home-stat{padding:21px}.home-section{padding-bottom:54px}.loss-section,.social-proof{padding:24px}.home-footer{flex-direction:column;align-items:flex-start}.home-trustline{gap:9px}.home-proof{min-height:430px;padding:10px 0}.hero-orbit{width:min(360px,92vw)}.hero-law-mark strong{font-size:105px}.hero-live-data{gap:10px;padding:12px 8px}.hero-live-data div{min-width:72px}.hero-live-data strong{font-size:18px}.hero-live-data span{font-size:8px}}
+
+
+/* Public homepage shell: independent from the application dashboard */
+body.public-home .layout{display:block;min-height:100vh}
+body.public-home .sidebar,
+body.public-home .topbar{display:none!important}
+body.public-home .main{width:100%;min-width:0}
+body.public-home .content{max-width:none;padding:0;margin:0}
+body.public-home #captureArea{width:100%}
+body.public-home #homePage{min-height:100vh}
+body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 auto}
+
+.public-site-header-wrap{
+  position:sticky;top:0;z-index:900;
+  background:rgba(248,250,252,.88);
+  border-bottom:1px solid rgba(226,232,240,.85);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+}
+.public-site-header{
+  max-width:1280px;height:76px;margin:0 auto;padding:0 28px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.public-brand{
+  border:0;background:transparent;padding:0;display:flex;align-items:center;gap:11px;
+  color:#0f172a;font-weight:800;font-size:21px;letter-spacing:-.5px;
+}
+.public-brand-mark{
+  width:40px;height:40px;border-radius:13px;display:grid;place-items:center;
+  color:#fff;background:linear-gradient(135deg,#10b981,#047857);
+  box-shadow:0 8px 20px rgba(5,150,105,.25);font-size:18px;
+}
+.public-nav{display:flex;align-items:center;gap:30px;margin-left:auto}
+.public-nav a{font-size:14px;font-weight:700;color:#475569;transition:.2s ease}
+.public-nav a:hover{color:#059669}
+.public-nav-actions{display:flex;align-items:center;gap:10px}
+.public-login{padding:11px 15px;background:#fff;border:1px solid #e2e8f0;color:#0f172a}
+.public-cta{padding:11px 16px;background:#059669;color:#fff;box-shadow:0 8px 18px rgba(5,150,105,.2)}
+.public-menu-button{display:none;width:42px;height:42px;border:1px solid #e2e8f0;background:#fff;border-radius:12px;font-size:20px}
+.public-mobile-menu{display:none;max-width:1280px;margin:0 auto;padding:0 20px 18px;gap:8px}
+.public-mobile-menu.open{display:grid}
+.public-mobile-menu a,.public-mobile-menu button{
+  text-align:left;border:0;border-radius:11px;background:#fff;border:1px solid #e2e8f0;
+  color:#1e293b;padding:13px 14px;font-weight:700
+}
+
+@media(max-width:850px){
+  body.public-home .sidebar{display:none!important}
+  body.public-home .content{padding:0!important}
+  body.public-home .home-page{padding:18px 16px 50px}
+  .public-site-header{height:68px;padding:0 16px}
+  .public-nav,.public-nav-actions{display:none}
+  .public-menu-button{display:grid;place-items:center}
+}
 
 </style>
 </head>
-<body>
+<body class="public-home">
 <div class="layout">
 <aside class="sidebar">
   <div class="brand"><div class="logo">R</div> RecallNG</div>
@@ -1187,6 +1253,31 @@
 <div class="content" id="captureArea">
 
 <section class="page active" id="homePage">
+  <div class="public-site-header-wrap">
+    <header class="public-site-header">
+      <button class="public-brand" type="button" onclick="showPage('home')" aria-label="RecallNG homepage">
+        <span class="public-brand-mark">R</span>
+        <span>RecallNG</span>
+      </button>
+      <nav class="public-nav" aria-label="Primary navigation">
+        <a href="#howRecallWorks">How it works</a>
+        <a href="#platformTrust">Why RecallNG</a>
+        <a href="#homeFaq">FAQs</a>
+      </nav>
+      <div class="public-nav-actions">
+        <button class="btn public-login" type="button" onclick="showPage('dashboard')">Open dashboard</button>
+        <button class="btn public-cta" type="button" onclick="openCampaign()">Start a campaign</button>
+      </div>
+      <button class="public-menu-button" id="publicMenuButton" type="button" aria-label="Toggle menu" aria-expanded="false">☰</button>
+    </header>
+    <div class="public-mobile-menu" id="publicMobileMenu">
+      <a href="#howRecallWorks">How it works</a>
+      <a href="#platformTrust">Why RecallNG</a>
+      <a href="#homeFaq">FAQs</a>
+      <button type="button" onclick="showPage('dashboard')">Open dashboard</button>
+      <button type="button" onclick="openCampaign()">Start a campaign</button>
+    </div>
+  </div>
   <div class="home-page">
     <section class="home-hero" aria-labelledby="homeHeadline">
       <div class="home-copy">
@@ -1206,22 +1297,23 @@
           <span>✓ INEC petition package</span>
         </div>
       </div>
-      <div class="home-proof" aria-label="Live campaign preview">
-        <div class="proof-head"><strong>Constituency action</strong><span class="proof-live">Live records</span></div>
-        <div class="proof-card">
-          <div class="proof-card-top">
-            <div><h3>Recall petition progress</h3><p>Signed voter records organized by polling unit</p></div>
-            <div class="proof-number"><span id="homeLiveSignatures">0</span><small>signatures</small></div>
-          </div>
-          <div class="proof-bar"><span id="homeProofBar"></span></div>
-          <div class="proof-bottom"><span id="homeLiveCampaigns">0 active campaigns</span><span>Identity-protected dashboard</span></div>
+      <div class="home-proof" aria-label="Section 69 civic action">
+        <div class="hero-orbit" aria-hidden="true">
+          <span class="orbit-ring orbit-ring-one"></span>
+          <span class="orbit-ring orbit-ring-two"></span>
+          <span class="orbit-node orbit-node-one"></span>
+          <span class="orbit-node orbit-node-two"></span>
+          <span class="orbit-node orbit-node-three"></span>
+          <div class="hero-law-mark"><small>Constitution</small><strong>69</strong><span>Power to recall</span></div>
         </div>
-        <div class="proof-card">
-          <div class="proof-card-top">
-            <div><h3>One signed record matters</h3><p>Name, VIN, polling unit and signature—organized for verification.</p></div>
-            <span class="badge">Actionable</span>
-          </div>
+        <div class="hero-live-data">
+          <div><strong id="homeLiveSignatures">0</strong><span>signed records</span></div>
+          <i></i>
+          <div><strong id="homeLiveCampaigns">0</strong><span>active campaigns</span></div>
+          <i></i>
+          <div><strong>INEC</strong><span>structured package</span></div>
         </div>
+        <div class="hero-live-progress" aria-label="Campaign activity"><span id="homeProofBar"></span></div>
       </div>
     </section>
 
@@ -1282,7 +1374,7 @@
       </div>
     </section>
 
-    <section class="home-section" aria-labelledby="faqHeading">
+    <section class="home-section" id="homeFaq" aria-labelledby="faqHeading">
       <div class="home-section-head"><span class="eyebrow">Frequently asked questions</span><h2 id="faqHeading">Know what your signature means.</h2></div>
       <div class="faq-grid">
         <article class="faq-item"><h3>Does signing automatically remove a politician?</h3><p>No. It adds a signed petition record. INEC still conducts the official verification and any referendum required by law.</p></article>
@@ -1864,6 +1956,7 @@ const heroQuotes = [
 ];
 let heroQuoteIndex = 0;
 let heroQuoteTimer = null;
+let heroQuoteInitialized = false;
 
 function renderHeroQuoteDots(){
   const holder=document.getElementById('heroQuoteProgress');
@@ -1899,7 +1992,8 @@ function restartHeroQuoteTimer(){
 
 function initHeroQuoteSlider(){
   const heading=document.getElementById('homeHeadline');
-  if(!heading)return;
+  if(!heading||heroQuoteInitialized)return;
+  heroQuoteInitialized=true;
   heading.textContent=heroQuotes[0];
   heading.classList.add('hero-quote-enter');
   renderHeroQuoteDots();
@@ -1913,7 +2007,25 @@ function initHeroQuoteSlider(){
   });
 }
 
+
+function initPublicNavigation(){
+  const button=document.getElementById('publicMenuButton');
+  const menu=document.getElementById('publicMobileMenu');
+  if(!button||!menu)return;
+  button.addEventListener('click',()=>{
+    const open=menu.classList.toggle('open');
+    button.setAttribute('aria-expanded',String(open));
+    button.textContent=open?'×':'☰';
+  });
+  menu.querySelectorAll('a,button').forEach(item=>item.addEventListener('click',()=>{
+    menu.classList.remove('open');
+    button.setAttribute('aria-expanded','false');
+    button.textContent='☰';
+  }));
+}
+
 function showPage(name){
+  document.body.classList.toggle('public-home',name==='home');
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   $(name+'Page').classList.add('active');
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
@@ -2409,7 +2521,7 @@ $('voterForm').onsubmit=e=>{
   const ctx=$('signatureCanvas').getContext('2d');
   ctx.clearRect(0,0,700,180);
   signatureData='';
-  renderAll();initHeroQuoteSlider();
+  renderAll();
   showNotification('The constituent has been registered successfully. Their identity remains hidden on the public dashboard.','success','Registration complete');
 };
 
@@ -3003,9 +3115,12 @@ async function startRecallNG(){
   initAmChartsNigeriaMap();
   initMap('miniMap');
   renderAll();
+  initHeroQuoteSlider();
   initPlatformMotion();
 }
 startRecallNG();
+
+initPublicNavigation();
 </script>
 </body>
 </html>
