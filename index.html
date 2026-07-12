@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,6 +40,17 @@
 <meta name="twitter:description" content="Find elected legislators, organize lawful recall campaigns and build verifiable constituency accountability records across Nigeria.">
 <meta name="twitter:image" content="assets/recallng-social-share.png">
 <meta name="twitter:image:alt" content="Nigerian citizens participating in legislative accountability through RecallNG">
+
+
+<link rel="canonical" href="/">
+<meta name="subject" content="Nigerian legislative accountability, constituency recall petitions and civic participation">
+<meta name="classification" content="Civic Technology, Government Accountability, Nigerian Elections">
+<meta name="coverage" content="Nigeria">
+<meta name="target" content="Nigerian registered voters, constituents, civic organizations and journalists">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="RecallNG">
+<meta property="og:url" content="/">
 
 <script type="application/ld+json">
 {
@@ -104,6 +116,67 @@
   ]
 }
 </script>
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@graph":[
+    {
+      "@type":"WebPage",
+      "@id":"#homepage",
+      "name":"RecallNG — Hold Your Elected Representative Accountable",
+      "headline":"Nigeria’s constituency accountability and legislative recall platform",
+      "description":"Find elected legislators, organize constituency recall petitions, collect signed voter records, track petition progress and prepare structured INEC petition documents.",
+      "inLanguage":"en-NG",
+      "isPartOf":{"@id":"#website"},
+      "about":[
+        {"@type":"Thing","name":"Legislative recall in Nigeria"},
+        {"@type":"Thing","name":"Constituency accountability"},
+        {"@type":"Thing","name":"INEC recall petitions"}
+      ],
+      "audience":{"@type":"PeopleAudience","suggestedMinAge":18,"geographicArea":{"@type":"Country","name":"Nigeria"}},
+      "mainEntity":{"@id":"#application"}
+    },
+    {
+      "@type":"Dataset",
+      "@id":"#electoral-data",
+      "name":"RecallNG Nigerian Constituency and Polling Unit Directory",
+      "description":"Structured reference data covering Nigerian states, LGAs, wards, polling units, senators-elect and House of Representatives members-elect used for constituency matching.",
+      "spatialCoverage":{"@type":"Country","name":"Nigeria"},
+      "temporalCoverage":"2023",
+      "keywords":["Nigeria polling units","senatorial districts","federal constituencies","INEC 2023 election","registered voters"],
+      "isAccessibleForFree":true,
+      "creator":{"@id":"#organization"}
+    },
+    {
+      "@type":"FAQPage",
+      "mainEntity":[
+        {
+          "@type":"Question",
+          "name":"Can Nigerian voters recall an elected legislator?",
+          "acceptedAnswer":{"@type":"Answer","text":"Yes. Nigeria’s Constitution provides a recall process for members of the Senate, House of Representatives and State Houses of Assembly. A petition must satisfy the applicable constitutional and INEC verification requirements."}
+        },
+        {
+          "@type":"Question",
+          "name":"Does signing on RecallNG automatically remove a politician?",
+          "acceptedAnswer":{"@type":"Answer","text":"No. RecallNG organizes signed constituency records and petition documents. INEC remains responsible for official verification, biometric authentication and any referendum required by law."}
+        },
+        {
+          "@type":"Question",
+          "name":"What details are required to support a recall petition?",
+          "acceptedAnswer":{"@type":"Answer","text":"A supporter provides their name, VIN, date of birth, phone number, state, LGA, ward, polling unit and signature so the petition record can be arranged for constituency verification."}
+        },
+        {
+          "@type":"Question",
+          "name":"Are voter names publicly displayed?",
+          "acceptedAnswer":{"@type":"Answer","text":"No. Public campaign dashboards hide voter names and sensitive identity details. Full records are reserved for authorized petition preparation and verification."}
+        }
+      ]
+    }
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://unpkg.com">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
@@ -994,7 +1067,96 @@
       #signatureCanvas,#supportSignatureCanvas { height:145px; }
     }
 
-  </style>
+  
+/* Public homepage */
+.home-page{max-width:1280px;margin:0 auto}
+.home-navline{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
+.home-kicker{display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border:1px solid #bbf7d0;background:#ecfdf5;color:#047857;border-radius:999px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.6px}
+.home-hero{position:relative;display:grid;grid-template-columns:1.08fr .92fr;gap:48px;align-items:center;min-height:610px;padding:62px;border-radius:32px;overflow:hidden;background:linear-gradient(135deg,#022c22 0%,#064e3b 46%,#059669 100%);box-shadow:0 30px 70px -25px rgba(2,44,34,.48);color:#fff}
+.home-hero:before{content:"";position:absolute;width:520px;height:520px;right:-170px;top:-230px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 68%)}
+.home-hero:after{content:"";position:absolute;width:420px;height:420px;left:-230px;bottom:-260px;border-radius:50%;background:radial-gradient(circle,rgba(52,211,153,.22),transparent 70%)}
+.home-copy,.home-proof{position:relative;z-index:1}
+.home-copy h1{font-size:clamp(46px,6.5vw,82px);line-height:.97;letter-spacing:-4px;margin:18px 0 24px;max-width:790px}
+.home-copy h1 em{font-style:normal;color:#6ee7b7}
+.hero-quote-stage{
+  position:relative;
+  display:grid;
+  align-items:center;
+  min-height:250px;
+  overflow:hidden;
+}
+.hero-rotating-quote{
+  grid-area:1/1;
+  margin:18px 0 24px;
+  will-change:transform,opacity;
+}
+.hero-quote-enter{
+  animation:heroQuoteIn .72s cubic-bezier(.16,1,.3,1) both;
+}
+.hero-quote-exit{
+  animation:heroQuoteOut .46s cubic-bezier(.7,0,.84,0) both;
+}
+@keyframes heroQuoteIn{
+  from{opacity:0;transform:translateY(62px);filter:blur(6px)}
+  to{opacity:1;transform:translateY(0);filter:blur(0)}
+}
+@keyframes heroQuoteOut{
+  from{opacity:1;transform:translateY(0);filter:blur(0)}
+  to{opacity:0;transform:translateY(-48px);filter:blur(5px)}
+}
+.hero-quote-progress{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:4px;
+}
+.hero-quote-progress button{
+  width:7px;
+  height:7px;
+  border:0;
+  border-radius:999px;
+  padding:0;
+  background:rgba(255,255,255,.28);
+  transition:width .32s ease,background .32s ease,transform .32s ease;
+}
+.hero-quote-progress button:hover{transform:scale(1.2);background:rgba(255,255,255,.65)}
+.hero-quote-progress button.active{width:26px;background:#fff}
+@media(max-width:700px){
+  .hero-quote-stage{min-height:210px}
+}
+@media(prefers-reduced-motion:reduce){
+  .hero-quote-enter,.hero-quote-exit{animation:none}
+}
+
+.home-copy>p{font-size:18px;line-height:1.75;color:#d1fae5;max-width:670px;margin:0 0 30px}
+.home-actions{display:flex;gap:12px;flex-wrap:wrap}
+.home-actions .btn{min-height:52px}
+.home-primary{background:#fff!important;color:#064e3b!important;box-shadow:0 12px 26px rgba(0,0,0,.15)!important}
+.home-secondary{background:rgba(255,255,255,.10)!important;color:#fff!important;border:1px solid rgba(255,255,255,.25)!important;backdrop-filter:blur(8px)}
+.home-trustline{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:28px;color:#a7f3d0;font-size:12px;font-weight:700}
+.home-trustline span{display:flex;align-items:center;gap:6px}
+.home-proof{background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:24px;backdrop-filter:blur(16px)}
+.proof-head{display:flex;justify-content:space-between;gap:14px;align-items:center;margin-bottom:18px}
+.proof-head strong{font-size:18px}.proof-live{display:inline-flex;gap:7px;align-items:center;color:#a7f3d0;font-size:11px;font-weight:800;text-transform:uppercase}.proof-live:before{content:"";width:8px;height:8px;background:#34d399;border-radius:50%;box-shadow:0 0 0 6px rgba(52,211,153,.13);animation:pulseGlow 2s infinite}
+.proof-card{background:#fff;color:#0f172a;border-radius:18px;padding:18px;margin-top:12px;box-shadow:0 12px 26px rgba(0,0,0,.10)}
+.proof-card-top{display:flex;justify-content:space-between;gap:16px;align-items:flex-start}.proof-card h3{margin:0 0 4px;font-size:17px}.proof-card p{margin:0;color:#64748b;font-size:12px}.proof-number{text-align:right;font-size:25px;font-weight:800;color:#047857}.proof-number small{display:block;font-size:10px;font-weight:700;color:#64748b}
+.proof-bar{height:8px;border-radius:999px;background:#e2e8f0;overflow:hidden;margin:15px 0 8px}.proof-bar span{display:block;width:54%;height:100%;background:linear-gradient(90deg,#059669,#34d399);border-radius:inherit}
+.proof-bottom{display:flex;justify-content:space-between;font-size:11px;color:#64748b}
+.home-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#e2e8f0;border:1px solid #e2e8f0;border-radius:24px;overflow:hidden;margin:28px 0 78px;box-shadow:var(--shadow-sm)}
+.home-stat{background:#fff;padding:27px 24px}.home-stat strong{display:block;font-size:34px;line-height:1;letter-spacing:-1.2px;color:#064e3b}.home-stat span{display:block;margin-top:9px;color:#64748b;font-size:12px;line-height:1.5}.home-stat b{font-size:10px;color:#059669;text-transform:uppercase;letter-spacing:.8px}
+.home-section{padding:30px 0 72px}.home-section-head{max-width:760px;margin-bottom:32px}.home-section-head .eyebrow{color:#059669;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;font-weight:800}.home-section-head h2{font-size:clamp(34px,4vw,52px);line-height:1.05;letter-spacing:-2px;margin:10px 0 14px}.home-section-head p{color:#64748b;font-size:16px;margin:0;line-height:1.75}
+.trigger-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.trigger-card{padding:28px;border:1px solid #e2e8f0;border-radius:22px;background:#fff;transition:var(--transition);position:relative;overflow:hidden}.trigger-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:#a7f3d0}.trigger-icon{width:44px;height:44px;border-radius:14px;background:#d1fae5;color:#047857;display:grid;place-items:center;font-size:19px;font-weight:900}.trigger-card h3{font-size:20px;margin:20px 0 9px}.trigger-card p{color:#64748b;margin:0;line-height:1.7;font-size:14px}.trigger-card strong{color:#0f172a}
+.loss-section{display:grid;grid-template-columns:.95fr 1.05fr;gap:32px;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:28px;padding:42px;box-shadow:var(--shadow-sm)}
+.loss-copy h2{font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-1.8px;margin:0 0 15px}.loss-copy p{color:#64748b;line-height:1.75}.loss-list{display:grid;gap:12px}.loss-item{display:flex;gap:12px;align-items:flex-start;padding:15px;border-radius:16px;background:#f8fafc;border:1px solid #edf2f7}.loss-item i{font-style:normal;width:28px;height:28px;border-radius:9px;background:#fef2f2;color:#dc2626;display:grid;place-items:center;font-weight:900;flex:0 0 auto}.loss-item strong{display:block;margin-bottom:2px}.loss-item span{font-size:12px;color:#64748b}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:steps}.step-card{background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:23px;counter-increment:steps}.step-card:before{content:"0" counter(steps);display:block;color:#059669;font-size:12px;font-weight:800;letter-spacing:1px;margin-bottom:28px}.step-card h3{margin:0 0 8px;font-size:17px}.step-card p{margin:0;color:#64748b;font-size:13px;line-height:1.65}
+.social-proof{background:linear-gradient(180deg,#fff,#f8fafc);border:1px solid #e2e8f0;border-radius:28px;padding:38px}.proof-logos{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}.proof-logo{border:1px solid #e2e8f0;background:#fff;border-radius:16px;padding:20px;text-align:center}.proof-logo strong{display:block;font-size:22px;color:#064e3b}.proof-logo span{font-size:11px;color:#64748b}
+.home-cta{position:relative;overflow:hidden;text-align:center;padding:60px 30px;border-radius:30px;background:linear-gradient(135deg,#022c22,#064e3b 58%,#059669);color:#fff}.home-cta h2{font-size:clamp(36px,5vw,58px);letter-spacing:-2px;line-height:1;margin:0 auto 16px;max-width:800px}.home-cta p{max-width:680px;margin:0 auto 28px;color:#d1fae5;line-height:1.7}.home-cta .home-actions{justify-content:center}
+.faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.faq-item{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:21px}.faq-item h3{font-size:15px;margin:0 0 8px}.faq-item p{font-size:13px;color:#64748b;line-height:1.65;margin:0}
+.home-footer{padding:38px 0 10px;display:flex;justify-content:space-between;gap:20px;align-items:center;color:#64748b;font-size:12px}.home-footer strong{color:#064e3b}
+@media(max-width:1050px){.home-hero{grid-template-columns:1fr;padding:48px}.home-proof{max-width:720px}.home-stats{grid-template-columns:1fr 1fr}.trigger-grid{grid-template-columns:1fr 1fr}.steps-grid,.proof-logos{grid-template-columns:1fr 1fr}.loss-section{grid-template-columns:1fr}}
+@media(max-width:700px){.home-hero{padding:30px 22px;border-radius:24px;min-height:auto}.home-copy h1{font-size:48px;letter-spacing:-2.5px}.home-copy>p{font-size:15px}.home-actions{display:grid;grid-template-columns:1fr}.home-stats,.trigger-grid,.steps-grid,.proof-logos,.faq-grid{grid-template-columns:1fr}.home-stat{padding:21px}.home-section{padding-bottom:54px}.loss-section,.social-proof{padding:24px}.home-footer{flex-direction:column;align-items:flex-start}.home-trustline{gap:9px}.home-proof{padding:16px}}
+
+</style>
 </head>
 <body>
 <div class="layout">
@@ -1002,7 +1164,8 @@
   <div class="brand"><div class="logo">R</div> RecallNG</div>
   <div class="side-label">Civic Dashboard</div>
   <div class="nav">
-    <button class="active" data-page="dashboard">▦ Dashboard</button>
+    <button class="active" data-page="home">⌂ Home</button>
+    <button data-page="dashboard">▦ Dashboard</button>
     <button data-page="register">◎ Voter Registration</button>
     <button data-page="campaigns">◉ Recall Campaigns</button>
     <button data-page="map">⌖ Nigeria Map</button>
@@ -1014,7 +1177,7 @@
 
 <main class="main">
 <header class="topbar">
-  <div><small class="muted">Constituency accountability</small><h1 id="pageTitle">Dashboard</h1></div>
+  <div><small class="muted">Constituency accountability</small><h1 id="pageTitle">Home</h1></div>
   <div class="top-actions">
     <button class="btn btn-light" id="exportDashboard">Export dashboard image</button>
     <button class="btn btn-primary" data-open-register>Register voter</button>
@@ -1022,7 +1185,118 @@
 </header>
 
 <div class="content" id="captureArea">
-<section class="page active" id="dashboardPage">
+
+<section class="page active" id="homePage">
+  <div class="home-page">
+    <section class="home-hero" aria-labelledby="homeHeadline">
+      <div class="home-copy">
+        <span class="home-kicker">Section 69 of the 1999 Constitution</span>
+        <div class="hero-quote-stage" aria-live="polite" aria-atomic="true">
+          <h1 id="homeHeadline" class="hero-rotating-quote">Your thumbprint is your power. Use it to recall.</h1>
+        </div>
+        <p>Find your elected legislator, examine an active recall campaign, add a signed constituency record and help build the structured petition package required for lawful action.</p>
+        <div class="home-actions">
+          <button class="btn home-primary" onclick="openCampaign()">Start a recall campaign</button>
+          <button class="btn home-secondary" onclick="showPage('campaigns')">Explore active campaigns</button>
+        </div>
+        <div class="hero-quote-progress" id="heroQuoteProgress" aria-label="Hero message navigation"></div>
+        <div class="home-trustline">
+          <span>✓ Voter names hidden publicly</span>
+          <span>✓ Polling-unit structured records</span>
+          <span>✓ INEC petition package</span>
+        </div>
+      </div>
+      <div class="home-proof" aria-label="Live campaign preview">
+        <div class="proof-head"><strong>Constituency action</strong><span class="proof-live">Live records</span></div>
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><h3>Recall petition progress</h3><p>Signed voter records organized by polling unit</p></div>
+            <div class="proof-number"><span id="homeLiveSignatures">0</span><small>signatures</small></div>
+          </div>
+          <div class="proof-bar"><span id="homeProofBar"></span></div>
+          <div class="proof-bottom"><span id="homeLiveCampaigns">0 active campaigns</span><span>Identity-protected dashboard</span></div>
+        </div>
+        <div class="proof-card">
+          <div class="proof-card-top">
+            <div><h3>One signed record matters</h3><p>Name, VIN, polling unit and signature—organized for verification.</p></div>
+            <span class="badge">Actionable</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-stats" aria-label="Nigeria electoral coverage">
+      <div class="home-stat"><b>National coverage</b><strong>109</strong><span>Senatorial district records structured for representative selection.</span></div>
+      <div class="home-stat"><b>Federal representation</b><strong>360</strong><span>House of Representatives constituency records in the directory.</span></div>
+      <div class="home-stat"><b>Polling infrastructure</b><strong>176,846</strong><span>Polling units reported for Nigeria’s 2023 general election.</span></div>
+      <div class="home-stat"><b>Registered electorate</b><strong>93.47M</strong><span>Registered voters reported nationally for the 2023 election.</span></div>
+    </section>
+
+    <section class="home-section">
+      <div class="home-section-head"><span class="eyebrow">Why RecallNG exists</span><h2>Election day should not be the last day a representative hears from the people.</h2><p>Accountability usually fails not because people are silent, but because their anger is scattered, unverified and impossible to submit as one organized constituency record.</p></div>
+      <div class="trigger-grid">
+        <article class="trigger-card"><div class="trigger-icon">⌖</div><h3>Know exactly who represents you</h3><p>Select your state, LGA and legislative chamber. RecallNG matches the relevant district, constituency and representative.</p></article>
+        <article class="trigger-card"><div class="trigger-icon">✍</div><h3>Turn frustration into evidence</h3><p>A complaint disappears in a timeline. A signed record tied to a VIN, ward and polling unit becomes part of an organized petition.</p></article>
+        <article class="trigger-card"><div class="trigger-icon">▤</div><h3>Prepare the complete petition pack</h3><p>Generate the formal letter, campaign analytics and polling-unit-arranged petitioners’ schedule from one campaign dashboard.</p></article>
+      </div>
+    </section>
+
+    <section class="home-section">
+      <div class="loss-section">
+        <div class="loss-copy"><span class="home-kicker">The cost of doing nothing</span><h2>Every unrecorded complaint leaves the same system untouched.</h2><p>Outrage alone is easy to ignore. Organized constituents are harder to dismiss. RecallNG gives a constituency one place to measure support, protect voter identity and prepare for the official verification process.</p><button class="btn btn-primary" onclick="showPage('register')">Register your voter record</button></div>
+        <div class="loss-list">
+          <div class="loss-item"><i>!</i><div><strong>Promises fade without a record</strong><span>Campaign promises and constituency concerns need structured documentation.</span></div></div>
+          <div class="loss-item"><i>!</i><div><strong>Scattered support looks smaller than it is</strong><span>A shared dashboard shows momentum, progress and geographic participation.</span></div></div>
+          <div class="loss-item"><i>!</i><div><strong>Unverified names cannot carry a petition</strong><span>Every supporter must be tied to voter and polling-unit details for formal preparation.</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section">
+      <div class="home-section-head"><span class="eyebrow">How it works</span><h2>From one constituent to a constituency-wide petition.</h2><p>The platform makes a legally complex organizing process understandable and measurable.</p></div>
+      <div class="steps-grid">
+        <article class="step-card"><h3>Select the representative</h3><p>Choose State, LGA and chamber. The correct constituency and representative load automatically.</p></article>
+        <article class="step-card"><h3>Create and sign</h3><p>The initiator supplies voter details, polling unit and signature and becomes the first petitioner.</p></article>
+        <article class="step-card"><h3>Share constituency-wide</h3><p>Invite other registered voters through WhatsApp and campaign sharing without exposing private voter details.</p></article>
+        <article class="step-card"><h3>Prepare for submission</h3><p>Export the letter, analytics and full petitioners’ schedule for review and the official INEC process.</p></article>
+      </div>
+    </section>
+
+    <section class="home-section">
+      <div class="social-proof">
+        <div class="home-section-head"><span class="eyebrow">Data-backed civic infrastructure</span><h2>Built around the structure of Nigeria’s electoral system.</h2><p>No vague location field. No anonymous click presented as a legal vote. Every campaign is tied to real electoral geography and a named legislative seat.</p></div>
+        <div class="proof-logos">
+          <div class="proof-logo"><strong>37</strong><span>States and FCT</span></div>
+          <div class="proof-logo"><strong>774</strong><span>LGAs and Area Councils</span></div>
+          <div class="proof-logo"><strong>109</strong><span>Senate seats</span></div>
+          <div class="proof-logo"><strong>360</strong><span>Federal constituencies</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section">
+      <div class="home-cta">
+        <h2>A representative’s seat belongs to the constituency—not to the representative.</h2>
+        <p>Start with one signed voter record. Give your constituency a place to see the facts, measure support and organize lawful action.</p>
+        <div class="home-actions"><button class="btn home-primary" onclick="openCampaign()">Start a campaign</button><button class="btn home-secondary" onclick="showPage('register')">Register as a voter</button></div>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="faqHeading">
+      <div class="home-section-head"><span class="eyebrow">Frequently asked questions</span><h2 id="faqHeading">Know what your signature means.</h2></div>
+      <div class="faq-grid">
+        <article class="faq-item"><h3>Does signing automatically remove a politician?</h3><p>No. It adds a signed petition record. INEC still conducts the official verification and any referendum required by law.</p></article>
+        <article class="faq-item"><h3>Who can be the subject of a recall?</h3><p>The platform covers recall-eligible legislative offices such as Senate, House of Representatives and State House of Assembly seats.</p></article>
+        <article class="faq-item"><h3>Will my name appear publicly?</h3><p>No. Public voter lists are anonymized. Full identity details are reserved for authorized petition preparation.</p></article>
+        <article class="faq-item"><h3>Why is a signature required?</h3><p>A campaign supporter must affirm the petition and provide a record that can be arranged for verification—not merely click a reaction button.</p></article>
+      </div>
+    </section>
+
+    <footer class="home-footer"><div><strong>RecallNG</strong> — Constituency accountability infrastructure for Nigeria.</div><div>Organize responsibly. Verify officially.</div></footer>
+  </div>
+</section>
+
+<section class="page" id="dashboardPage">
   <div class="hero">
     <div>
       <span class="pill">🇳🇬 Constituency accountability in action</span>
@@ -1575,11 +1849,75 @@ function refreshRevealTargets(){
   });
 }
 
+
+const heroQuotes = [
+  "Your thumbprint is your power. Use it to recall.",
+  "Demand transparency. Demand accountability.",
+  "Don’t wait four years to demand better.",
+  "They’re to serve you, not the other way round.",
+  "You voted them to improve your life—not theirs. Recall them.",
+  "They have power after your vote. Show them you still matter.",
+  "Do anyhow. Receive anyhow. Sign the petition.",
+  "Power belongs to the people. Exercise it today.",
+  "Hold your representatives accountable now.",
+  "Bad governance thrives when good people just wait."
+];
+let heroQuoteIndex = 0;
+let heroQuoteTimer = null;
+
+function renderHeroQuoteDots(){
+  const holder=document.getElementById('heroQuoteProgress');
+  if(!holder)return;
+  holder.innerHTML=heroQuotes.map((_,i)=>`<button type="button" aria-label="Show message ${i+1}" class="${i===heroQuoteIndex?'active':''}" data-quote-index="${i}"></button>`).join('');
+  holder.querySelectorAll('button').forEach(button=>{
+    button.addEventListener('click',()=>{
+      showHeroQuote(Number(button.dataset.quoteIndex));
+      restartHeroQuoteTimer();
+    });
+  });
+}
+
+function showHeroQuote(nextIndex){
+  const heading=document.getElementById('homeHeadline');
+  if(!heading||nextIndex===heroQuoteIndex)return;
+  heading.classList.remove('hero-quote-enter');
+  heading.classList.add('hero-quote-exit');
+  window.setTimeout(()=>{
+    heroQuoteIndex=(nextIndex+heroQuotes.length)%heroQuotes.length;
+    heading.textContent=heroQuotes[heroQuoteIndex];
+    heading.classList.remove('hero-quote-exit');
+    void heading.offsetWidth;
+    heading.classList.add('hero-quote-enter');
+    renderHeroQuoteDots();
+  },430);
+}
+
+function restartHeroQuoteTimer(){
+  if(heroQuoteTimer)window.clearInterval(heroQuoteTimer);
+  heroQuoteTimer=window.setInterval(()=>showHeroQuote(heroQuoteIndex+1),5200);
+}
+
+function initHeroQuoteSlider(){
+  const heading=document.getElementById('homeHeadline');
+  if(!heading)return;
+  heading.textContent=heroQuotes[0];
+  heading.classList.add('hero-quote-enter');
+  renderHeroQuoteDots();
+  restartHeroQuoteTimer();
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){
+      if(heroQuoteTimer)window.clearInterval(heroQuoteTimer);
+    }else{
+      restartHeroQuoteTimer();
+    }
+  });
+}
+
 function showPage(name){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   $(name+'Page').classList.add('active');
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
-  $('pageTitle').textContent=titleCase(name);
+  $('pageTitle').textContent=name==='home'?'Home':titleCase(name);
   if(name==='map') setTimeout(()=>maps.forEach(m=>m.invalidateSize()),100);
   if(name==='analytics') renderCharts();
   if(name==='letter'){
@@ -2071,7 +2409,7 @@ $('voterForm').onsubmit=e=>{
   const ctx=$('signatureCanvas').getContext('2d');
   ctx.clearRect(0,0,700,180);
   signatureData='';
-  renderAll();
+  renderAll();initHeroQuoteSlider();
   showNotification('The constituent has been registered successfully. Their identity remains hidden on the public dashboard.','success','Registration complete');
 };
 
@@ -2390,6 +2728,9 @@ function renderStats(){
   ['heroCampaigns','statCampaigns'].forEach(id=>$(id).textContent=fmt(campaigns.length));
   ['heroVotes','statVotes'].forEach(id=>$(id).textContent=fmt(votes));
   $('statProgress').textContent=highest.toFixed(1)+'%';
+  if($('homeLiveSignatures')) $('homeLiveSignatures').textContent=fmt(votes);
+  if($('homeLiveCampaigns')) $('homeLiveCampaigns').textContent=`${fmt(campaigns.length)} active campaign${campaigns.length===1?'':'s'}`;
+  if($('homeProofBar')) $('homeProofBar').style.width=Math.max(12,Math.min(100,highest||12))+'%';
 }
 function renderLetterOptions(){
   const campaigns=getData('recallng_campaigns');
