@@ -687,6 +687,49 @@
       transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .campaign-top { display: flex; justify-content: space-between; gap: 20px; margin-bottom: 16px; }
+    .campaign-list { margin-top: 20px; }
+    .campaign-list.view-list { display: block; }
+    .campaign-list.view-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+      align-items: stretch;
+    }
+    .campaign-list.view-grid .campaign {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      margin-bottom: 0;
+      padding: 26px;
+    }
+    .campaign-list.view-grid .campaign > div:last-child { margin-top: auto; }
+    .campaign-list.view-grid .empty { grid-column: 1 / -1; }
+    .campaign-heading-actions { display: flex; align-items: center; gap: 12px; }
+    .view-toggle {
+      display: inline-flex;
+      padding: 4px;
+      gap: 4px;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+    }
+    .view-toggle button {
+      border: 0;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 10px;
+      padding: 9px 12px;
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1;
+      transition: var(--transition);
+    }
+    .view-toggle button:hover { color: var(--primary); }
+    .view-toggle button.active {
+      color: var(--dark);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
     
     .badge {
       display: inline-block;
@@ -932,6 +975,8 @@
       .print-chart-grid,.print-summary { grid-template-columns:1fr 1fr; }
       .section-title { align-items:flex-start; gap:14px; flex-direction:column; }
       .top-actions .btn { padding:11px 14px; }
+      .campaign-list.view-grid { grid-template-columns:1fr; }
+      .campaign-heading-actions { width:100%; justify-content:space-between; flex-wrap:wrap; }
     }
 
     @media(max-width:560px){
@@ -1045,7 +1090,16 @@
 </section>
 
 <section class="page" id="campaignsPage">
-  <div class="section-title"><div><h2>Recall campaigns</h2><span class="muted">Create, review and support constituency campaigns.</span></div><button class="btn btn-primary" id="newCampaignBtn2">Start campaign</button></div>
+  <div class="section-title">
+    <div><h2>Recall campaigns</h2><span class="muted">Create, review and support constituency campaigns.</span></div>
+    <div class="campaign-heading-actions">
+      <div class="view-toggle" role="group" aria-label="Campaign layout">
+        <button type="button" id="campaignGridView" aria-label="Grid view" aria-pressed="false">▦ Grid</button>
+        <button type="button" id="campaignListView" aria-label="List view" aria-pressed="true">☰ List</button>
+      </div>
+      <button class="btn btn-primary" id="newCampaignBtn2">Start campaign</button>
+    </div>
+  </div>
   
   <div class="filter-shell">
     <div class="filter-bar">
@@ -1074,7 +1128,7 @@
     <div class="filter-actions"><button class="btn btn-light btn-small" id="clearCampaignFilters">Clear filters</button></div>
   </div>
 
-  <div id="campaignList"></div>
+  <div id="campaignList" class="campaign-list view-list"></div>
 </section>
 
 <section class="page" id="mapPage">
@@ -1898,6 +1952,22 @@ $('campaignFilterState').onchange=e=>{
 ['campaignFilterLGA','campaignFilterOffice','campaignFilterStatus','campaignSort'].forEach(id=>{
   $(id).onchange=renderCampaigns;
 });
+function setCampaignView(mode,persist=true){
+  const view=mode==='grid'?'grid':'list';
+  const container=$('campaignList');
+  container.classList.toggle('view-grid',view==='grid');
+  container.classList.toggle('view-list',view==='list');
+  ['Grid','List'].forEach(name=>{
+    const active=view===name.toLowerCase();
+    const button=$(`campaign${name}View`);
+    button.classList.toggle('active',active);
+    button.setAttribute('aria-pressed',String(active));
+  });
+  if(persist)localStorage.setItem('recallng_campaign_view',view);
+}
+$('campaignGridView').onclick=()=>setCampaignView('grid');
+$('campaignListView').onclick=()=>setCampaignView('list');
+setCampaignView(localStorage.getItem('recallng_campaign_view')||'list',false);
 $('clearCampaignFilters').onclick=()=>{
   ['campaignFilterState','campaignFilterLGA','campaignFilterOffice','campaignFilterStatus'].forEach(id=>$(id).value='');
   $('campaignSort').value='newest';
@@ -2169,6 +2239,33 @@ function campaignMatchesLGA(campaign,lga,voters){
   if(lgaMatchesConstituency(lga,campaign.constituency))return true;
   return (campaign.votes||[]).some(id=>normalizeWords(voters.find(v=>v.id===id)?.lga)===wanted);
 }
+function campaignJurisdictionLGAs(campaign){
+  const explicit=[campaign.lga,...(campaign.constituencyLGAs||[])].filter(Boolean);
+  if(explicit.length)return [...new Set(explicit.map(normalizeWords).filter(Boolean))];
+  return [];
+}
+function isVoterEligibleForCampaign(campaign,voter){
+  if(!campaign||!voter)return false;
+  if(normalizeStateKey(voter.state)!==normalizeStateKey(campaign.state))return false;
+  const voterLGA=normalizeWords(voter.lga);
+  if(!voterLGA)return false;
+  const jurisdiction=campaignJurisdictionLGAs(campaign);
+  if(jurisdiction.includes(voterLGA))return true;
+
+  // Compatibility for older saved campaigns that predate constituencyLGAs.
+  const location=electoralLgaRecord(campaign.state,voter.lga);
+  if(!location)return lgaMatchesConstituency(voter.lga,campaign.constituency);
+  if(campaign.office==='House of Representatives'){
+    return normalizeWords(location.house)===normalizeWords(campaign.constituency)||
+      lgaMatchesConstituency(voter.lga,campaign.constituency);
+  }
+  if(campaign.office==='Senate'){
+    const campaignDistrict=normalizeWords(campaign.constituency).replace(/ senatorial district$/,'');
+    return campaignDistrict===normalizeWords(location.senate)||
+      campaignDistrict.endsWith(normalizeWords(location.senate));
+  }
+  return lgaMatchesConstituency(voter.lga,campaign.constituency);
+}
 function renderCampaigns(){
   let campaigns=[...getData('recallng_campaigns')];
   const state=$('campaignFilterState')?.value||'';
@@ -2204,14 +2301,20 @@ function renderCampaigns(){
 window.openVote=id=>{
   const campaign=getData('recallng_campaigns').find(c=>c.id===id);if(!campaign)return;
   $('voteCampaignId').value=id;$('voteCampaignText').textContent=`Support the petition to recall ${campaign.representative} in ${campaign.constituency}.`;
-  const eligible=getData('recallng_voters').filter(v=>v.state===campaign.state);
-  $('voteVoterSelect').innerHTML='<option value="">Select constituent</option>'+eligible.map(v=>`<option value="${v.id}">${escapeHTML(v.name)} — ${maskVIN(v.vin)} — ${titleCase(v.pollingUnit)}</option>`).join('');
+  const eligible=getData('recallng_voters').filter(v=>isVoterEligibleForCampaign(campaign,v));
+  $('voteVoterSelect').innerHTML=eligible.length
+    ?'<option value="">Select constituent</option>'+eligible.map(v=>`<option value="${v.id}">${escapeHTML(v.name)} — ${maskVIN(v.vin)} — ${titleCase(v.lga)} · ${titleCase(v.pollingUnit)}</option>`).join('')
+    :'<option value="">No registered constituents in this jurisdiction</option>';
   openModal(voteModal);
 };
 $('voteForm').onsubmit=e=>{
   e.preventDefault();
   const campaigns=getData('recallng_campaigns'),campaign=campaigns.find(c=>c.id===$('voteCampaignId').value);
   const voterId=$('voteVoterSelect').value;
+  const voter=getData('recallng_voters').find(v=>v.id===voterId);
+  if(!campaign||!isVoterEligibleForCampaign(campaign,voter)){
+    showNotification('Only registered constituents within this politician’s constituency may support this campaign.','error','Outside campaign jurisdiction');return
+  }
   if(campaign.votes.includes(voterId)){showNotification('This constituent has already signed this campaign.','error','Duplicate signature');return}
   campaign.votes.push(voterId);setData('recallng_campaigns',campaigns);closeModal(voteModal);renderAll();
   activeShareCampaignId=campaign.id;activeShareVoterId=voterId;
@@ -2485,9 +2588,41 @@ function renderCampaignDetail(){const c=getData('recallng_campaigns').find(x=>x.
     charts.detailAverage=new Chart($('detailAverageChart'),{type:'bar',data:{labels:['Signed petition','2023 avg. voters per PU'],datasets:[{label:'People',data:[c.votes.length,avgPerPU]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
 
     destroyChart('detailPolling');charts.detailPolling=new Chart($('detailPollingChart'),{type:'bar',data:{labels:labs,datasets:[{label:'Signatures',data:labs.map(x=>pc[x]||0)}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}}}})}}
-$('detailSupportForm').onsubmit=e=>{e.preventDefault();const campaigns=getData('recallng_campaigns'),c=campaigns.find(x=>x.id===activeDetailCampaignId);if(!c)return;if(!supportSignatureData){showNotification(String('Please sign before submitting.'),'error');return}const effectiveState=c.state;
-  const effectiveLGA=officeUsesFixedLGA(c.office)?(c.lga||$('supportLGA').value):$('supportLGA').value;
-  if(c.state!==effectiveState){showNotification(String(`This campaign is for ${titleCase(c.state)}.`),'error');return}const vin=$('supportVIN').value.trim().toUpperCase(),voters=getData('recallng_voters');let v=voters.find(x=>x.vin===vin);if(v&&c.votes.includes(v.id)){showNotification(String('This VIN has already signed this campaign.'),'error');return}if(!v){v={id:crypto.randomUUID?.()||Date.now().toString(),name:$('supportName').value.trim(),vin,dob:$('supportDOB').value,phone:$('supportPhone').value.trim(),state:$('supportState').value,lga:$('supportLGA').value,ward:$('supportWard').value,pollingUnit:$('supportPolling').value,office:c.office,representative:c.representative,signature:supportSignatureData,createdAt:new Date().toISOString()};voters.push(v)}else{Object.assign(v,{name:$('supportName').value.trim(),dob:$('supportDOB').value,phone:$('supportPhone').value.trim(),state:$('supportState').value,lga:$('supportLGA').value,ward:$('supportWard').value,pollingUnit:$('supportPolling').value,signature:supportSignatureData})}setData('recallng_voters',voters);c.votes.push(v.id);setData('recallng_campaigns',campaigns);e.target.reset();supportSignatureData='';$('supportSignatureCanvas').getContext('2d').clearRect(0,0,700,180);renderAll();renderCampaignDetail();activeShareCampaignId=c.id;activeShareVoterId=v.id;$('shareModalText').textContent='Your signed support has been counted. Share the petition without exposing private voter details.';$('shareModal').classList.add('open')}
+$('detailSupportForm').onsubmit=e=>{
+  e.preventDefault();
+  const campaigns=getData('recallng_campaigns');
+  const c=campaigns.find(x=>x.id===activeDetailCampaignId);
+  if(!c)return;
+  if(!supportSignatureData){showNotification('Please sign before submitting.','error');return}
+
+  const vin=$('supportVIN').value.trim().toUpperCase();
+  const voters=getData('recallng_voters');
+  let v=voters.find(x=>x.vin===vin);
+  const submittedLocation={state:$('supportState').value,lga:$('supportLGA').value};
+  const eligibilityRecord=v||submittedLocation;
+  if(!isVoterEligibleForCampaign(c,eligibilityRecord)){
+    showNotification(`Only constituents registered within ${c.constituency} may support this campaign.`,'error','Outside campaign jurisdiction');return
+  }
+  if(v&&c.votes.includes(v.id)){showNotification('This VIN has already signed this campaign.','error','Duplicate signature');return}
+
+  if(!v){
+    v={id:crypto.randomUUID?.()||Date.now().toString(),name:$('supportName').value.trim(),vin,dob:$('supportDOB').value,phone:$('supportPhone').value.trim(),state:$('supportState').value,lga:$('supportLGA').value,ward:$('supportWard').value,pollingUnit:$('supportPolling').value,office:c.office,representative:c.representative,signature:supportSignatureData,createdAt:new Date().toISOString()};
+    voters.push(v);
+  }else{
+    // Preserve the registered constituency for an existing VIN.
+    Object.assign(v,{name:$('supportName').value.trim(),dob:$('supportDOB').value,phone:$('supportPhone').value.trim(),signature:supportSignatureData});
+  }
+  setData('recallng_voters',voters);
+  c.votes.push(v.id);
+  setData('recallng_campaigns',campaigns);
+  e.target.reset();
+  supportSignatureData='';
+  $('supportSignatureCanvas').getContext('2d').clearRect(0,0,700,180);
+  renderAll();renderCampaignDetail();
+  activeShareCampaignId=c.id;activeShareVoterId=v.id;
+  $('shareModalText').textContent='Your signed support has been counted. Share the petition without exposing private voter details.';
+  $('shareModal').classList.add('open');
+}
 
 function stateRepresentativeSummary(stateKey){
   const senate=databaseSenators
