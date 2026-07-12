@@ -1157,7 +1157,22 @@
 .home-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#e2e8f0;border:1px solid #e2e8f0;border-radius:24px;overflow:hidden;margin:28px 0 78px;box-shadow:var(--shadow-sm)}
 .home-stat{background:#fff;padding:27px 24px}.home-stat strong{display:block;font-size:34px;line-height:1;letter-spacing:-1.2px;color:#064e3b}.home-stat span{display:block;margin-top:9px;color:#64748b;font-size:12px;line-height:1.5}.home-stat b{font-size:10px;color:#059669;text-transform:uppercase;letter-spacing:.8px}
 .home-section{padding:30px 0 72px}.home-section-head{max-width:760px;margin-bottom:32px}.home-section-head .eyebrow{color:#059669;font-size:11px;text-transform:uppercase;letter-spacing:1.2px;font-weight:800}.home-section-head h2{font-size:clamp(34px,4vw,52px);line-height:1.05;letter-spacing:-2px;margin:10px 0 14px}.home-section-head p{color:#64748b;font-size:16px;margin:0;line-height:1.75}
+.home-section[id]{scroll-margin-top:96px}
 .trigger-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}.trigger-card{padding:28px;border:1px solid #e2e8f0;border-radius:22px;background:#fff;transition:var(--transition);position:relative;overflow:hidden}.trigger-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-md);border-color:#a7f3d0}.trigger-icon{width:44px;height:44px;border-radius:14px;background:#d1fae5;color:#047857;display:grid;place-items:center;font-size:19px;font-weight:900}.trigger-card h3{font-size:20px;margin:20px 0 9px}.trigger-card p{color:#64748b;margin:0;line-height:1.7;font-size:14px}.trigger-card strong{color:#0f172a}
+.home-editorial-split{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr);gap:28px;align-items:stretch}
+.home-editorial-split.reverse{grid-template-columns:minmax(420px,.92fr) minmax(0,1.08fr)}
+.home-editorial-split .trigger-grid{grid-template-columns:1fr;gap:14px}
+.home-editorial-split .trigger-card{padding:22px 24px}
+.home-editorial-split .trigger-card h3{font-size:17px;margin:13px 0 6px}
+.home-editorial-split .trigger-icon{width:36px;height:36px;border-radius:11px;font-size:16px}
+.home-editorial-split .steps-grid{grid-template-columns:1fr 1fr;gap:14px}
+.home-editorial-image{position:relative;min-height:540px;margin:0;overflow:hidden;border-radius:26px;background:#064e3b}
+.home-editorial-image img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .8s cubic-bezier(.16,1,.3,1)}
+.home-editorial-image:hover img{transform:scale(1.025)}
+.home-editorial-image:after{content:"";position:absolute;inset:42% 0 0;background:linear-gradient(transparent,rgba(2,44,34,.88))}
+.home-editorial-image figcaption{position:absolute;z-index:2;left:28px;right:28px;bottom:26px;color:#fff}
+.home-editorial-image figcaption strong{display:block;font-size:21px;letter-spacing:-.4px}
+.home-editorial-image figcaption span{display:block;margin-top:5px;color:#d1fae5;font-size:12px;line-height:1.55;max-width:420px}
 .loss-section{display:grid;grid-template-columns:.95fr 1.05fr;gap:32px;align-items:center;background:#fff;border:1px solid #e2e8f0;border-radius:28px;padding:42px;box-shadow:var(--shadow-sm)}
 .loss-copy h2{font-size:clamp(32px,4vw,48px);line-height:1.05;letter-spacing:-1.8px;margin:0 0 15px}.loss-copy p{color:#64748b;line-height:1.75}.loss-list{display:grid;gap:12px}.loss-item{display:flex;gap:12px;align-items:flex-start;padding:15px;border-radius:16px;background:#f8fafc;border:1px solid #edf2f7}.loss-item i{font-style:normal;width:28px;height:28px;border-radius:9px;background:#fef2f2;color:#dc2626;display:grid;place-items:center;font-weight:900;flex:0 0 auto}.loss-item strong{display:block;margin-bottom:2px}.loss-item span{font-size:12px;color:#64748b}
 .steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:steps}.step-card{background:#fff;border:1px solid #e2e8f0;border-radius:20px;padding:23px;counter-increment:steps}.step-card:before{content:"0" counter(steps);display:block;color:#059669;font-size:12px;font-weight:800;letter-spacing:1px;margin-bottom:28px}.step-card h3{margin:0 0 8px;font-size:17px}.step-card p{margin:0;color:#64748b;font-size:13px;line-height:1.65}
@@ -1165,8 +1180,8 @@
 .home-cta{position:relative;overflow:hidden;text-align:center;padding:60px 30px;border-radius:30px;background:linear-gradient(135deg,#022c22,#064e3b 58%,#059669);color:#fff}.home-cta h2{font-size:clamp(36px,5vw,58px);letter-spacing:-2px;line-height:1;margin:0 auto 16px;max-width:800px}.home-cta p{max-width:680px;margin:0 auto 28px;color:#d1fae5;line-height:1.7}.home-cta .home-actions{justify-content:center}
 .faq-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.faq-item{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:21px}.faq-item h3{font-size:15px;margin:0 0 8px}.faq-item p{font-size:13px;color:#64748b;line-height:1.65;margin:0}
 .home-footer{padding:38px 0 10px;display:flex;justify-content:space-between;gap:20px;align-items:center;color:#64748b;font-size:12px}.home-footer strong{color:#064e3b}
-@media(max-width:1050px){.home-hero{grid-template-columns:1fr;padding:58px 8px;gap:30px}.home-proof{width:min(580px,100%);min-height:500px;margin:0 auto}.home-stats{grid-template-columns:1fr 1fr}.trigger-grid{grid-template-columns:1fr 1fr}.steps-grid,.proof-logos{grid-template-columns:1fr 1fr}.loss-section{grid-template-columns:1fr}}
-@media(max-width:700px){.home-hero{padding:38px 0;min-height:auto}.home-copy h1{font-size:48px;letter-spacing:-2.5px}.home-copy>p{font-size:15px}.home-actions{display:grid;grid-template-columns:1fr}.home-stats,.trigger-grid,.steps-grid,.proof-logos,.faq-grid{grid-template-columns:1fr}.home-stat{padding:21px}.home-section{padding-bottom:54px}.loss-section,.social-proof{padding:24px}.home-footer{flex-direction:column;align-items:flex-start}.home-trustline{gap:9px}.home-proof{min-height:430px;padding:10px 0}.hero-orbit{width:min(360px,92vw)}.hero-law-mark strong{font-size:105px}.hero-live-data{gap:10px;padding:12px 8px}.hero-live-data div{min-width:72px}.hero-live-data strong{font-size:18px}.hero-live-data span{font-size:8px}}
+@media(max-width:1050px){.home-hero{grid-template-columns:1fr;padding:58px 8px;gap:30px}.home-proof{width:min(580px,100%);min-height:500px;margin:0 auto}.home-stats{grid-template-columns:1fr 1fr}.trigger-grid{grid-template-columns:1fr 1fr}.steps-grid,.proof-logos{grid-template-columns:1fr 1fr}.loss-section{grid-template-columns:1fr}.home-editorial-split,.home-editorial-split.reverse{grid-template-columns:1fr}.home-editorial-image{min-height:460px}.home-editorial-split.reverse .steps-grid{order:2}.home-editorial-split.reverse .home-editorial-image{order:1}}
+@media(max-width:700px){.home-hero{padding:38px 0;min-height:auto}.home-copy h1{font-size:48px;letter-spacing:-2.5px}.home-copy>p{font-size:15px}.home-actions{display:grid;grid-template-columns:1fr}.home-stats,.trigger-grid,.steps-grid,.proof-logos,.faq-grid{grid-template-columns:1fr}.home-stat{padding:21px}.home-section{padding-bottom:54px}.loss-section,.social-proof{padding:24px}.home-footer{flex-direction:column;align-items:flex-start}.home-trustline{gap:9px}.home-proof{min-height:430px;padding:10px 0}.hero-orbit{width:min(360px,92vw)}.hero-law-mark strong{font-size:105px}.hero-live-data{gap:10px;padding:12px 8px}.hero-live-data div{min-width:72px}.hero-live-data strong{font-size:18px}.hero-live-data span{font-size:8px}.home-editorial-split .steps-grid{grid-template-columns:1fr}.home-editorial-image{min-height:390px;border-radius:20px}.home-editorial-image figcaption{left:20px;right:20px;bottom:20px}}
 
 
 /* Public homepage shell: independent from the application dashboard */
@@ -1285,7 +1300,7 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
         <div class="hero-quote-stage" aria-live="polite" aria-atomic="true">
           <h1 id="homeHeadline" class="hero-rotating-quote">Your thumbprint is your power. Use it to recall.</h1>
         </div>
-        <p>Find your elected legislator, examine an active recall campaign, add a signed constituency record and help build the structured petition package required for lawful action.</p>
+        <p>The constitutional tool for Nigerian constituents to lawfully recall underperforming legislators. Secure, verifiable, and powered entirely by the people.</p>
         <div class="home-actions">
           <button class="btn home-primary" onclick="openCampaign()">Start a recall campaign</button>
           <button class="btn home-secondary" onclick="showPage('campaigns')">Explore active campaigns</button>
@@ -1324,12 +1339,18 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
       <div class="home-stat"><b>Registered electorate</b><strong>93.47M</strong><span>Registered voters reported nationally for the 2023 election.</span></div>
     </section>
 
-    <section class="home-section">
+    <section class="home-section" id="platformTrust">
       <div class="home-section-head"><span class="eyebrow">Why RecallNG exists</span><h2>Election day should not be the last day a representative hears from the people.</h2><p>Accountability usually fails not because people are silent, but because their anger is scattered, unverified and impossible to submit as one organized constituency record.</p></div>
-      <div class="trigger-grid">
-        <article class="trigger-card"><div class="trigger-icon">⌖</div><h3>Know exactly who represents you</h3><p>Select your state, LGA and legislative chamber. RecallNG matches the relevant district, constituency and representative.</p></article>
-        <article class="trigger-card"><div class="trigger-icon">✍</div><h3>Turn frustration into evidence</h3><p>A complaint disappears in a timeline. A signed record tied to a VIN, ward and polling unit becomes part of an organized petition.</p></article>
-        <article class="trigger-card"><div class="trigger-icon">▤</div><h3>Prepare the complete petition pack</h3><p>Generate the formal letter, campaign analytics and polling-unit-arranged petitioners’ schedule from one campaign dashboard.</p></article>
+      <div class="home-editorial-split">
+        <figure class="home-editorial-image">
+          <img src="assets/home-constituency-meeting.webp" alt="Nigerian constituents discussing representation and accountability at a community meeting" width="1536" height="1024" loading="lazy" decoding="async">
+          <figcaption><strong>Accountability starts locally.</strong><span>Constituents turn shared concerns into organized civic action.</span></figcaption>
+        </figure>
+        <div class="trigger-grid">
+          <article class="trigger-card"><div class="trigger-icon">⌖</div><h3>Know exactly who represents you</h3><p>Select your state, LGA and legislative chamber. RecallNG matches the relevant district, constituency and representative.</p></article>
+          <article class="trigger-card"><div class="trigger-icon">✍</div><h3>Turn frustration into evidence</h3><p>A complaint disappears in a timeline. A signed record tied to a VIN, ward and polling unit becomes part of an organized petition.</p></article>
+          <article class="trigger-card"><div class="trigger-icon">▤</div><h3>Prepare the complete petition pack</h3><p>Generate the formal letter, campaign analytics and polling-unit-arranged petitioners’ schedule from one campaign dashboard.</p></article>
+        </div>
       </div>
     </section>
 
@@ -1344,13 +1365,19 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
       </div>
     </section>
 
-    <section class="home-section">
+    <section class="home-section" id="howRecallWorks">
       <div class="home-section-head"><span class="eyebrow">How it works</span><h2>From one constituent to a constituency-wide petition.</h2><p>The platform makes a legally complex organizing process understandable and measurable.</p></div>
-      <div class="steps-grid">
-        <article class="step-card"><h3>Select the representative</h3><p>Choose State, LGA and chamber. The correct constituency and representative load automatically.</p></article>
-        <article class="step-card"><h3>Create and sign</h3><p>The initiator supplies voter details, polling unit and signature and becomes the first petitioner.</p></article>
-        <article class="step-card"><h3>Share constituency-wide</h3><p>Invite other registered voters through WhatsApp and campaign sharing without exposing private voter details.</p></article>
-        <article class="step-card"><h3>Prepare for submission</h3><p>Export the letter, analytics and full petitioners’ schedule for review and the official INEC process.</p></article>
+      <div class="home-editorial-split reverse">
+        <div class="steps-grid">
+          <article class="step-card"><h3>Select the representative</h3><p>Choose State, LGA and chamber. The correct constituency and representative load automatically.</p></article>
+          <article class="step-card"><h3>Create and sign</h3><p>The initiator supplies voter details, polling unit and signature and becomes the first petitioner.</p></article>
+          <article class="step-card"><h3>Share constituency-wide</h3><p>Invite other registered voters through WhatsApp and campaign sharing without exposing private voter details.</p></article>
+          <article class="step-card"><h3>Prepare for submission</h3><p>Export the letter, analytics and full petitioners’ schedule for review and the official INEC process.</p></article>
+        </div>
+        <figure class="home-editorial-image">
+          <img src="assets/home-petition-preparation.webp" alt="Nigerian civic organizers preparing structured constituency petition records" width="1536" height="1024" loading="lazy" decoding="async">
+          <figcaption><strong>Structure makes action credible.</strong><span>Petition records are reviewed, organized and prepared for verification.</span></figcaption>
+        </figure>
       </div>
     </section>
 
