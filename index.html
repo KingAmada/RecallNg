@@ -1737,6 +1737,10 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
           <input id="campaignInitiatorConsent" type="checkbox" required>
           I confirm that I am the named registered voter and authorize my voter details and signature to be included as the first petitioner in this recall campaign.
         </label>
+        <label class="legal-consent">
+          <input id="campaignLegalConsent" type="checkbox" required>
+          <span>I have read and agree to the <a href="#termsModal" data-open-legal="termsModal">Terms &amp; Conditions</a> and the <a href="#privacyModal" data-open-legal="privacyModal">NDPR Privacy Notice</a>.</span>
+        </label>
       </section>
 
       <div class="modal-actions">
@@ -1799,7 +1803,7 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
     <div class="legal-document">
       <p>These terms govern the use of RecallNG to organize constituency records for a proposed legislative recall. By supporting a campaign, you agree to the following conditions.</p>
       <h3>1. Eligibility and truthful information</h3>
-      <ul><li>You must be at least 18 years old and provide only your own accurate voter information.</li><li>You may support only a campaign within the constituency or legislative jurisdiction in which you are registered.</li><li>You must not impersonate another voter, submit duplicate support, manipulate campaign totals or provide a false signature.</li></ul>
+      <ul><li>You must be at least 18 years old and provide only your own accurate voter information.</li><li>You may support only a campaign within the constituency or legislative jurisdiction in which you are registered.</li><li>You must not create a duplicate campaign for a legislative seat when an existing campaign can be supported.</li><li>You must not impersonate another voter, submit duplicate support, manipulate campaign totals or provide a false signature.</li></ul>
       <h3>2. Nature of platform support</h3>
       <p>A signature recorded on RecallNG is a petition-support record. It does not itself recall a legislator, constitute INEC verification or replace any official referendum, biometric verification or other legal requirement.</p>
       <h3>3. Authorization</h3>
@@ -2679,12 +2683,22 @@ $('closeCampaignModal').onclick=()=>closeModal(campaignModal);
 $('cancelCampaignModal').onclick=()=>closeModal(campaignModal);
 $('closeVoteModal').onclick=()=>closeModal(voteModal);
 
-
-
+function findExistingCampaign(state,office,constituency){
+  return getData('recallng_campaigns').find(c=>
+    normalizeStateKey(c.state)===normalizeStateKey(state)&&
+    normalizeWords(c.office)===normalizeWords(office)&&
+    normalizeWords(c.constituency)===normalizeWords(constituency)
+  );
+}
 
 $('campaignForm').onsubmit=e=>{
   e.preventDefault();
   clearFieldErrors(e.target);
+
+  if(!$('campaignLegalConsent').checked){
+    showNotification('Read and accept the Terms & Conditions and Privacy Notice before creating a campaign.','error','Consent required');
+    return;
+  }
 
   const state=$('campaignState').value;
   const lga=$('campaignLGA').value;
@@ -2707,6 +2721,15 @@ $('campaignForm').onsubmit=e=>{
   }
   if(!representative||!constituency||!selected.estimatedRegisteredVoters){
     showNotification('Select a representative so the constituency data can be loaded automatically.','error','Representative required');
+    return;
+  }
+
+  const existingCampaign=findExistingCampaign(state,office,constituency);
+  if(existingCampaign){
+    closeModal(campaignModal);
+    activeDetailCampaignId=existingCampaign.id;
+    showPage('campaignDetail');
+    showNotification(`A recall campaign already exists for ${existingCampaign.representative}. Review and support the existing campaign instead.`,'info','Campaign already exists');
     return;
   }
 
