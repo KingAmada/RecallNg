@@ -1259,7 +1259,6 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
   <div class="nav">
     <button class="active" data-page="home">⌂ Home</button>
     <button data-page="dashboard">▦ Dashboard</button>
-    <button data-page="register">◎ Voter Registration</button>
     <button data-page="campaigns">◉ Recall Campaigns</button>
     <button data-page="map">⌖ Nigeria Map</button>
     <button data-page="analytics">↗ Analytics</button>
@@ -1273,7 +1272,7 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
   <div><small class="muted">Constituency accountability</small><h1 id="pageTitle">Home</h1></div>
   <div class="top-actions">
     <button class="btn btn-light" id="exportDashboard">Export dashboard image</button>
-    <button class="btn btn-primary" data-open-register>Register voter</button>
+    <button class="btn btn-primary" data-open-campaign>Start campaign</button>
   </div>
 </header>
 
@@ -1368,7 +1367,7 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
 
     <section class="home-section">
       <div class="loss-section">
-        <div class="loss-copy"><span class="home-kicker">The cost of doing nothing</span><h2>Every unrecorded complaint leaves the same system untouched.</h2><p>Outrage alone is easy to ignore. Organized constituents are harder to dismiss. RecallNG gives a constituency one place to measure support, protect voter identity and prepare for the official verification process.</p><button class="btn btn-primary" onclick="showPage('register')">Register your voter record</button></div>
+        <div class="loss-copy"><span class="home-kicker">The cost of doing nothing</span><h2>Every unrecorded complaint leaves the same system untouched.</h2><p>Outrage alone is easy to ignore. Organized constituents are harder to dismiss. RecallNG gives a constituency one place to measure support, protect voter identity and prepare for the official verification process.</p><button class="btn btn-primary" onclick="openCampaign()">Start a recall campaign</button></div>
         <div class="loss-list">
           <div class="loss-item"><i>!</i><div><strong>Promises fade without a record</strong><span>Campaign promises and constituency concerns need structured documentation.</span></div></div>
           <div class="loss-item"><i>!</i><div><strong>Scattered support looks smaller than it is</strong><span>A shared dashboard shows momentum, progress and geographic participation.</span></div></div>
@@ -1409,7 +1408,7 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
       <div class="home-cta">
         <h2>A representative’s seat belongs to the constituency—not to the representative.</h2>
         <p>Start with one signed voter record. Give your constituency a place to see the facts, measure support and organize lawful action.</p>
-        <div class="home-actions"><button class="btn home-primary" onclick="openCampaign()">Start a campaign</button><button class="btn home-secondary" onclick="showPage('register')">Register as a voter</button></div>
+        <div class="home-actions"><button class="btn home-primary" onclick="openCampaign()">Start a campaign</button><button class="btn home-secondary" onclick="showPage('campaigns')">View campaigns</button></div>
       </div>
     </section>
 
@@ -1432,8 +1431,8 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
     <div>
       <span class="pill">🇳🇬 Constituency accountability in action</span>
       <h2>They work for the people. The people can hold them to it.</h2>
-      <p>Register constituents, organize recall campaigns by polling unit, track the legal threshold and prepare an INEC-ready petition package.</p>
-      <button class="btn btn-light" data-open-register>Register as a constituent</button>
+      <p>Organize recall campaigns by polling unit, collect verified petition support, track the legal threshold and prepare an INEC-ready petition package.</p>
+      <button class="btn btn-light" data-open-campaign>Start a campaign</button>
     </div>
     <div class="hero-panel">
       <small>National organizing snapshot</small>
@@ -1457,41 +1456,6 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
 
   <div class="section-title"><div><h2>Active recall campaigns</h2><span class="muted">Constituents can support only campaigns tied to their selected state and constituency.</span></div><button class="btn btn-primary" id="newCampaignBtn">Start campaign</button></div>
   <div id="dashboardCampaigns"></div>
-</section>
-
-<section class="page" id="registerPage">
-  <div class="section-title"><div><h2>Constituent registration</h2><span class="muted">Register your voter identity and polling unit. Representative selection is handled inside each recall campaign.</span></div></div>
-  <div class="grid grid-2">
-    <div class="card">
-      <form id="voterForm" style="margin-top:18px">
-        <div class="form-grid">
-          <div class="form-row"><label>Full name</label><input id="fullName" required placeholder="As shown on voter record"></div>
-          <div class="form-row"><label>Voter Identification Number (VIN)</label><input id="vin" required minlength="8" placeholder="Enter VIN"></div>
-          <div class="form-row"><label>Date of birth</label><input id="dob" type="date" required></div>
-          <div class="form-row"><label>Phone number</label><input id="phone" type="text" inputmode="numeric" pattern="[0-9]{11}" minlength="11" maxlength="11" required placeholder="08012345678"></div>
-        </div>
-        <div class="form-grid">
-          <div class="form-row"><label>State</label><select id="stateSelect" required><option value="">Loading states...</option></select></div>
-          <div class="form-row"><label>LGA</label><select id="lgaSelect" required disabled><option value="">Select state first</option></select></div>
-          <div class="form-row"><label>Ward</label><select id="wardSelect" required disabled><option value="">Select LGA first</option></select></div>
-          <div class="form-row"><label>Polling unit</label><select id="pollingSelect" required disabled><option value="">Select ward first</option></select></div>
-        </div>
-        <div class="form-row"><label style="display:flex;gap:9px;align-items:flex-start;font-weight:500"><input id="privacyConsent" type="checkbox" style="width:auto;margin-top:3px" required>I consent to the secure processing of my voter details for constituency verification and official petition preparation. My information must not be publicly displayed or used for unrelated political targeting.</label></div>
-        <div class="form-row"><label style="display:flex;gap:9px;align-items:flex-start;font-weight:500"><input id="declaration" type="checkbox" style="width:auto;margin-top:3px" required>I declare that I am the named voter and that the information supplied is accurate.</label></div>
-        <div class="signature-box">
-          <label>Signature</label>
-          <canvas id="signatureCanvas" width="700" height="180"></canvas>
-          <button class="btn btn-light btn-small" type="button" id="clearSignature">Clear signature</button>
-        </div>
-        <button class="btn btn-primary" type="submit" style="margin-top:15px;width:100%">Register constituent</button>
-      </form>
-    </div>
-    <div class="card">
-      <h3>Registered voters</h3>
-      <p class="muted">Names and sensitive identity fields are hidden from the public dashboard.</p>
-      <div id="voterTable"></div>
-    </div>
-  </div>
 </section>
 
 <section class="page" id="campaignsPage">
@@ -1870,8 +1834,6 @@ const GEOJSON_URL='https://raw.githubusercontent.com/wmgeolab/geoBoundaries/main
 let pollingData=[];
 let maps=[];
 let charts={};
-let signatureData='';
-
 let activeShareCampaignId='';
 let activeShareVoterId='';let activeDetailCampaignId='';let supportSignatureData='';
 let campaignSignatureData='';
@@ -2158,7 +2120,7 @@ function showPage(name){
   refreshRevealTargets();
 }
 document.querySelectorAll('.nav button').forEach(b=>b.onclick=()=>showPage(b.dataset.page));
-document.querySelectorAll('[data-open-register]').forEach(b=>b.onclick=()=>showPage('register'));
+document.querySelectorAll('[data-open-campaign]').forEach(b=>b.onclick=openCampaign);
 
 async function loadPollingData(){
   try{
@@ -2185,7 +2147,7 @@ function stateOptionsHTML(firstLabel='Select state'){
 }
 function populateAllStateControls(){
   const html=stateOptionsHTML();
-  ['stateSelect','campaignState','supportState'].forEach(id=>{
+  ['campaignState','supportState'].forEach(id=>{
     const el=$(id);
     if(el){
       const current=el.value;
@@ -2212,30 +2174,7 @@ function populateLGAControl(stateKey,targetId,firstLabel='Select LGA'){
   el.disabled=!state;
 }
 
-function populateStates(){
-  populateAllStateControls();
-  
-}
-$('stateSelect').onchange=e=>{
-  const state=pollingData.find(s=>s.state===e.target.value);
-  $('lgaSelect').disabled=!state;
-  $('lgaSelect').innerHTML='<option value="">Select LGA</option>'+(state?.lgas||[]).map(l=>`<option value="${escapeHTML(l.lga)}">${titleCase(l.lga)}</option>`).join('');
-  $('wardSelect').disabled=true;$('pollingSelect').disabled=true;
-};
-$('lgaSelect').onchange=e=>{
-  const state=pollingData.find(s=>s.state===$('stateSelect').value);
-  const lga=state?.lgas.find(l=>l.lga===e.target.value);
-  $('wardSelect').disabled=!lga;
-  $('wardSelect').innerHTML='<option value="">Select ward</option>'+(lga?.wards||[]).map(w=>`<option value="${escapeHTML(w.ward)}">${titleCase(w.ward)}</option>`).join('');
-  $('pollingSelect').disabled=true;
-};
-$('wardSelect').onchange=e=>{
-  const state=pollingData.find(s=>s.state===$('stateSelect').value);
-  const lga=state?.lgas.find(l=>l.lga===$('lgaSelect').value);
-  const ward=lga?.wards.find(w=>w.ward===e.target.value);
-  $('pollingSelect').disabled=!ward;
-  $('pollingSelect').innerHTML='<option value="">Select polling unit</option>'+(ward?.polling_units||[]).map(p=>`<option value="${escapeHTML(p)}">${titleCase(p)}</option>`).join('');
-};
+function populateStates(){populateAllStateControls()}
 
 
 
@@ -2587,67 +2526,6 @@ function setupCampaignInitiatorSelectors(){
     polling.innerHTML='<option value="">Select polling unit</option>'+(selectedWard?.polling_units||[]).map(p=>`<option value="${escapeHTML(p)}">${titleCase(p)}</option>`).join('');
   };
 }
-
-function initSignature(){
-  const canvas=$('signatureCanvas'),ctx=canvas.getContext('2d');let drawing=false;
-  function point(e){const r=canvas.getBoundingClientRect(),t=e.touches?.[0]||e;return{x:(t.clientX-r.left)*(canvas.width/r.width),y:(t.clientY-r.top)*(canvas.height/r.height)}}
-  function start(e){drawing=true;const p=point(e);ctx.beginPath();ctx.moveTo(p.x,p.y);e.preventDefault()}
-  function move(e){if(!drawing)return;const p=point(e);ctx.lineWidth=2.2;ctx.lineCap='round';ctx.strokeStyle='#14251b';ctx.lineTo(p.x,p.y);ctx.stroke();e.preventDefault()}
-  function stop(){drawing=false;signatureData=canvas.toDataURL()}
-  ['mousedown','touchstart'].forEach(x=>canvas.addEventListener(x,start,{passive:false}));
-  ['mousemove','touchmove'].forEach(x=>canvas.addEventListener(x,move,{passive:false}));
-  ['mouseup','mouseleave','touchend'].forEach(x=>canvas.addEventListener(x,stop));
-  $('clearSignature').onclick=()=>{ctx.clearRect(0,0,canvas.width,canvas.height);signatureData=''};
-}
-
-$('voterForm').onsubmit=async e=>{
-  e.preventDefault();
-  clearFieldErrors(e.target);
-
-  const phone=$('phone').value.trim();
-  const dob=$('dob').value;
-  let valid=true;
-
-  if(!validatePhone(phone)){fieldError($('phone'),'Enter exactly 11 digits, for example 08012345678.');valid=false}
-  if(!isAdultDOB(dob)){fieldError($('dob'),'The voter must be at least 18 years old.');valid=false}
-  if(!signatureData){showNotification('Please provide a signature before registering.','error');valid=false}
-  if(!valid)return;
-
-  const vin=$('vin').value.trim().toUpperCase();
-  const {error}=await supabaseClient.rpc('register_voter',{
-    p_full_name:$('fullName').value.trim(),p_vin:vin,p_date_of_birth:dob,
-    p_phone:phone,p_state:$('stateSelect').value,p_lga:$('lgaSelect').value,
-    p_ward:$('wardSelect').value,p_polling_unit:$('pollingSelect').value,
-    p_signature:signatureData
-  });
-  if(error){
-    showNotification(error.code==='23505'?'This VIN has already been registered.':'The voter record could not be saved. Please try again.','error','Database error');
-    return;
-  }
-  await loadApplicationData();
-  e.target.reset();
-  const ctx=$('signatureCanvas').getContext('2d');
-  ctx.clearRect(0,0,700,180);
-  signatureData='';
-  renderAll();
-  showNotification('The constituent has been registered successfully. Their identity remains hidden on the public dashboard.','success','Registration complete');
-};
-
-function renderVoters(){
-  const voters=getData('recallng_voters');
-  if(!voters.length){$('voterTable').innerHTML='<div class="empty">No registered constituents yet.</div>';return}
-  $('voterTable').innerHTML=`<div class="table-wrap"><table>
-    <thead><tr><th>Voter record</th><th>VIN</th><th>Phone</th><th>State</th><th>Polling unit</th></tr></thead>
-    <tbody>${voters.map((v,i)=>`<tr>
-      <td><strong>Anonymous voter ${String(i+1).padStart(3,'0')}</strong></td>
-      <td>${maskVIN(v.vin)}</td>
-      <td>${maskPhone(v.phone)}</td>
-      <td>${titleCase(v.state)}</td>
-      <td>${titleCase(v.pollingUnit)}</td>
-    </tr>`).join('')}</tbody>
-  </table></div>`;
-}
-
 
 function openModal(modal){
   if(!modal)return;
@@ -3251,7 +3129,7 @@ function stateRepresentativeSummary(stateKey){
 
 function initAmChartsNigeriaMap(){if(!window.am5||!window.am5map)return;am5.ready(function(){const root=am5.Root.new('chartdiv');root.setThemes([am5themes_Animated.new(root)]);const chart=root.container.children.push(am5map.MapChart.new(root,{panX:'translateX',panY:'translateY',wheelY:'zoom',projection:am5map.geoMercator()}));const series=chart.series.push(am5map.MapPolygonSeries.new(root,{calculateAggregates:true,valueField:'value'}));series.mapPolygons.template.setAll({tooltipText:'{name}\n{representative}\n{recallStatus}',interactive:true,stroke:am5.color(0xffffff),strokeWidth:1});series.mapPolygons.template.states.create('hover',{fill:am5.color(0x0b6b3a)});series.set('heatRules',[{target:series.mapPolygons.template,dataField:'value',min:am5.color(0xd8eadf),max:am5.color(0x08783f),key:'fill'}]);am5.net.load('https://cdn.amcharts.com/lib/5/geodata/json/nigeriaLow.json',chart).then(result=>{const geo=am5.JSONParser.parse(result.response),campaigns=getData('recallng_campaigns'),sv=stateVoteCounts(),databaseStates=[...new Set([...databaseSenators,...databaseHouseRepresentatives,...databaseStateAssembly].map(r=>r.state))],data=geo.features.map(f=>{const raw=(f.properties.name||'').toLowerCase(),state=databaseStates.find(k=>raw.includes(k)||normalizeWords(raw)===normalizeWords(k))||raw,reps=stateRepresentativeSummary(state),cs=campaigns.filter(c=>c.state===state);return{id:f.id,value:sv[state]||0,representative:reps.length?'Representatives: '+reps.join(', '):'Representative data pending',recallStatus:cs.length?cs.map(c=>`${c.representative}: ${c.votes.length}/${threshold(c)} signatures`).join('\n'):'No recall process underway',stateKey:state}});series.set('geoJSON',geo);series.data.setAll(data);series.mapPolygons.template.events.on('click',ev=>{const d=ev.target.dataItem?.dataContext,c=getData('recallng_campaigns').find(x=>x.state===d?.stateKey);if(c)openCampaignDetail(c.id)});chart.appear(800,100)})})}
 
-function renderAll(){renderStats();renderVoters();renderCampaigns();renderStateSummary();renderCharts();renderLetterOptions()}
+function renderAll(){renderStats();renderCampaigns();renderStateSummary();renderCharts();renderLetterOptions()}
 async function startRecallNG(){
   try{
     await Promise.all([loadWinnersDatabase(),loadApplicationData()]);
@@ -3262,7 +3140,6 @@ async function startRecallNG(){
   setTimeout(()=>{if(pollingData.length){populateAllStateControls();}},300);
   setAdultDateLimits();
   loadPollingData();
-  initSignature();
   initSupportSignature();
   initCampaignSignature();
   setupCampaignInitiatorSelectors();
