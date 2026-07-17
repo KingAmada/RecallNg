@@ -1756,7 +1756,6 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
       <button class="btn btn-light" id="copyShareBtn">Copy campaign message</button>
       <button class="btn btn-light" id="shareSupportBtn">Share my support</button>
     </div>
-    <p class="privacy" style="margin-top:14px">Shared messages do not expose VIN, date of birth, phone number or signature.</p>
   </div>
 </div>
 
@@ -2959,8 +2958,10 @@ function updateLetter(){
   const hasDeliveryEmail=Boolean(campaign.leadPetitionerEmail);
   $('legacyLeadEmailSetup').hidden=hasDeliveryEmail;
   if(!hasDeliveryEmail)$('legacyLeadEmail').value='';
-  $('printPetitionBtn').disabled=!reached;
-  $('downloadVoters').disabled=!reached||!hasDeliveryEmail;
+  // Keep both actions clickable so printing can produce a draft and locked
+  // delivery actions can explain exactly what is still required.
+  $('printPetitionBtn').disabled=false;
+  $('downloadVoters').disabled=false;
   $('petitionDeliveryStatus').className=`notice ${reached&&hasDeliveryEmail?'success':'warning'}`;
   $('petitionDeliveryStatus').textContent=!reached
     ?`The anonymized preview is available now. The submission package unlocks at ${fmt(threshold(campaign))} signatures (60%); ${fmt(Math.max(0,threshold(campaign)-campaign.votes.length))} more needed.`
@@ -2971,6 +2972,15 @@ function updateLetter(){
   if($('letterPage').classList.contains('active')) scheduleLetterChartRender(campaign);
 }
 
+function showPetitionTargetModal(campaign){
+  const required=threshold(campaign),signed=campaign.votes.length;
+  showNotification(
+    `The required signature target has not been reached. ${fmt(signed)} of ${fmt(required)} signatures have been collected. Please keep sharing this recall campaign until the required signatures are reached.`,
+    'info',
+    'More signatures needed'
+  );
+}
+
 $('printPetitionBtn').onclick=()=>{
   const campaign=getData('recallng_campaigns').find(c=>c.id===$('letterCampaignSelect').value);
   if(!campaign){
@@ -2978,16 +2988,16 @@ $('printPetitionBtn').onclick=()=>{
     return;
   }
   if(campaign.votes.length<threshold(campaign)){
-    showNotification(`This petition package unlocks after the campaign reaches its 60% safety target of ${fmt(threshold(campaign))} signatures.`,'error','Target not reached');
+    showPetitionTargetModal(campaign);
     return;
   }
   renderLetterAnalyticsAndVoters(campaign,true);
-  setTimeout(()=>window.print(),180);
+  window.print();
 };
 
 $('downloadVoters').onclick=()=>{
   const campaign=getData('recallng_campaigns').find(c=>c.id===$('letterCampaignSelect').value);if(!campaign){showNotification('Select a campaign before downloading its petitioners’ schedule.','error');return}
-  if(campaign.votes.length<threshold(campaign)){showNotification(`The unmasked schedule is locked until the 60% safety target of ${fmt(threshold(campaign))} signatures is reached.`,'error','Target not reached');return}
+  if(campaign.votes.length<threshold(campaign)){showPetitionTargetModal(campaign);return}
   if(!campaign.leadPetitionerEmail){showNotification('This campaign does not have a lead petitioner email address. The protected schedule cannot be prepared.','error','Email required');return}
   const voters=getData('recallng_voters').filter(v=>campaign.votes.includes(v.id));
   const rows=[['Name','VIN','Date of Birth','Phone','State','LGA','Ward','Polling Unit','Office','Representative'],...voters.map(v=>[v.name,v.vin,v.dob,v.phone,titleCase(v.state),titleCase(v.lga),titleCase(v.ward),titleCase(v.pollingUnit),v.office||campaign.office,v.representative||campaign.representative])];
@@ -3009,7 +3019,7 @@ $('downloadVoters').onclick=()=>{
   downloadBlob(eml,`RecallNG-email-${campaign.constituency}.eml`.replace(/[^a-z0-9._-]+/gi,'-'),'message/rfc822');
   showNotification(`A ready-to-send email with the protected CSV attached has been prepared for ${campaign.leadPetitionerEmail}. Open it in an email application, verify the recipient and send it securely.`,'success','Email pack prepared');
 };
-function downloadBlob(content,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
+function downloadBlob(content,name,type){const a=document.createElement('a'),url=URL.createObjectURL(new Blob([content],{type}));a.href=url;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(url)},1000)}
 async function capture(name,element=document.body){
   if(!window.html2canvas){showNotification('The screenshot library is unavailable. Use your browser screenshot function instead.','error');return}
   const canvas=await html2canvas(element,{scale:2,backgroundColor:'#f3f7f4',useCORS:true});
@@ -3095,7 +3105,7 @@ $('detailSupportForm').onsubmit=async e=>{
   $('supportSignatureCanvas').getContext('2d').clearRect(0,0,700,180);
   renderAll();renderCampaignDetail();
   activeShareCampaignId=c.id;activeShareVoterId=voterId;
-  $('shareModalText').textContent='Your signed support has been counted. Share the petition without exposing private voter details.';
+  $('shareModalText').textContent='Your signed support has been counted.';
   closeModal(voteModal);
   $('shareModal').classList.add('open');
 }
