@@ -1929,7 +1929,9 @@ function campaignFromDatabase(row){
     averageVotersPerPU:Number(row.average_voters_per_pu||0),party:row.party||'',
     gender:row.gender||'',sourceRemarks:row.source_remarks||'',
     representativeDataSource:row.representative_data_source||'',reason:row.reason,
-    evidence:row.evidence||'',leadPetitionerEmail:row.lead_petitioner_email||'',
+    evidence:row.evidence||'',leadPetitionerName:row.lead_petitioner_name||'',
+    leadPetitionerSignature:row.lead_petitioner_signature||'',
+    leadPetitionerEmail:row.lead_petitioner_email||'',
     votes:row.votes||[],createdAt:row.created_at
   };
 }
@@ -2783,13 +2785,11 @@ async function initMap(id){
       onEachFeature:(f,l)=>{
         const displayName=f.properties.shapeName||'State',stateKey=displayName.toLowerCase();
         const stateCampaigns=campaigns.filter(c=>c.state===stateKey);
-        const reps=representativeDirectory[stateKey]||[];
-        const representativeRows=reps.length?reps.map(r=>`<div style="margin:7px 0"><strong>${escapeHTML(r.name)}</strong><br><small>${escapeHTML(r.office)} · ${escapeHTML(r.constituency)}</small></div>`).join(''):'<small>No representative data preloaded for this state.</small>';
         const campaignRows=stateCampaigns.length?stateCampaigns.map(c=>{
           const reached=c.votes.length>=threshold(c);
           return `<div style="margin:9px 0;padding:8px;background:#f2f7f4;border-radius:8px"><strong>${escapeHTML(c.representative)}</strong><br><small>${reached?'Threshold reached':'Recall underway'} · ${fmt(c.votes.length)} of ${fmt(threshold(c))} required signatures</small></div>`
-        }).join(''):'<small>No recall process currently shown.</small>';
-        l.bindPopup(`<div style="min-width:245px"><h3 style="margin:0 0 8px">${escapeHTML(displayName)}</h3><strong>Elected representatives</strong>${representativeRows}<hr style="border:0;border-top:1px solid #ddd"><strong>Recall status</strong>${campaignRows}</div>`)
+        }).join(''):'<small>No active recall campaign.</small>';
+        l.bindPopup(`<div style="min-width:245px"><h3 style="margin:0 0 8px">${escapeHTML(displayName)}</h3><strong>Active recall campaigns</strong>${campaignRows}</div>`)
       }
     }).addTo(map);
   }catch{
@@ -2957,11 +2957,12 @@ function updateLetter(){
   $('letterConstituency').textContent=campaign.constituency.toUpperCase();document.querySelectorAll('.letterConstituency').forEach(x=>x.textContent=campaign.constituency);
   $('letterOffice').textContent=campaign.office;$('letterReason').textContent=campaign.reason;$('letterVoteCount').textContent=fmt(campaign.votes.length);
   const voters=getData('recallng_voters').filter(v=>campaign.votes.includes(v.id));
-  const lead=voters.find(v=>v.id===campaign.initiatedBy)||voters.find(v=>v.id===campaign.votes[0])||voters[0];
-  $('leadPetitioner').textContent=lead?.name||'________________';
+  const lead=voters.find(v=>v.id===campaign.votes[0])||voters[0];
+  $('leadPetitioner').textContent=campaign.leadPetitionerName||lead?.name||'________________';
   const leadSignature=$('leadPetitionerSignature');
-  if(lead?.signature?.startsWith('data:image')){
-    leadSignature.src=lead.signature;
+  const signature=campaign.leadPetitionerSignature||lead?.signature||'';
+  if(signature.startsWith('data:image')){
+    leadSignature.src=signature;
     leadSignature.hidden=false;
   }else{
     leadSignature.removeAttribute('src');
@@ -3127,7 +3128,7 @@ function stateRepresentativeSummary(stateKey){
   return [...senate,...house,...assembly];
 }
 
-function initAmChartsNigeriaMap(){if(!window.am5||!window.am5map)return;am5.ready(function(){const root=am5.Root.new('chartdiv');root.setThemes([am5themes_Animated.new(root)]);const chart=root.container.children.push(am5map.MapChart.new(root,{panX:'translateX',panY:'translateY',wheelY:'zoom',projection:am5map.geoMercator()}));const series=chart.series.push(am5map.MapPolygonSeries.new(root,{calculateAggregates:true,valueField:'value'}));series.mapPolygons.template.setAll({tooltipText:'{name}\n{representative}\n{recallStatus}',interactive:true,stroke:am5.color(0xffffff),strokeWidth:1});series.mapPolygons.template.states.create('hover',{fill:am5.color(0x0b6b3a)});series.set('heatRules',[{target:series.mapPolygons.template,dataField:'value',min:am5.color(0xd8eadf),max:am5.color(0x08783f),key:'fill'}]);am5.net.load('https://cdn.amcharts.com/lib/5/geodata/json/nigeriaLow.json',chart).then(result=>{const geo=am5.JSONParser.parse(result.response),campaigns=getData('recallng_campaigns'),sv=stateVoteCounts(),databaseStates=[...new Set([...databaseSenators,...databaseHouseRepresentatives,...databaseStateAssembly].map(r=>r.state))],data=geo.features.map(f=>{const raw=(f.properties.name||'').toLowerCase(),state=databaseStates.find(k=>raw.includes(k)||normalizeWords(raw)===normalizeWords(k))||raw,reps=stateRepresentativeSummary(state),cs=campaigns.filter(c=>c.state===state);return{id:f.id,value:sv[state]||0,representative:reps.length?'Representatives: '+reps.join(', '):'Representative data pending',recallStatus:cs.length?cs.map(c=>`${c.representative}: ${c.votes.length}/${threshold(c)} signatures`).join('\n'):'No recall process underway',stateKey:state}});series.set('geoJSON',geo);series.data.setAll(data);series.mapPolygons.template.events.on('click',ev=>{const d=ev.target.dataItem?.dataContext,c=getData('recallng_campaigns').find(x=>x.state===d?.stateKey);if(c)openCampaignDetail(c.id)});chart.appear(800,100)})})}
+function initAmChartsNigeriaMap(){if(!window.am5||!window.am5map)return;am5.ready(function(){const root=am5.Root.new('chartdiv');root.setThemes([am5themes_Animated.new(root)]);const chart=root.container.children.push(am5map.MapChart.new(root,{panX:'translateX',panY:'translateY',wheelY:'zoom',projection:am5map.geoMercator()}));const series=chart.series.push(am5map.MapPolygonSeries.new(root,{calculateAggregates:true,valueField:'value'}));series.mapPolygons.template.setAll({tooltipText:'{name}\n{recallStatus}',interactive:true,stroke:am5.color(0xffffff),strokeWidth:1});series.mapPolygons.template.states.create('hover',{fill:am5.color(0x0b6b3a)});series.set('heatRules',[{target:series.mapPolygons.template,dataField:'value',min:am5.color(0xd8eadf),max:am5.color(0x08783f),key:'fill'}]);am5.net.load('https://cdn.amcharts.com/lib/5/geodata/json/nigeriaLow.json',chart).then(result=>{const geo=am5.JSONParser.parse(result.response),campaigns=getData('recallng_campaigns'),sv=stateVoteCounts(),databaseStates=[...new Set([...databaseSenators,...databaseHouseRepresentatives,...databaseStateAssembly].map(r=>r.state))],data=geo.features.map(f=>{const raw=(f.properties.name||'').toLowerCase(),state=databaseStates.find(k=>raw.includes(k)||normalizeWords(raw)===normalizeWords(k))||raw,cs=campaigns.filter(c=>c.state===state);return{id:f.id,value:sv[state]||0,recallStatus:cs.length?cs.map(c=>`${c.representative}: ${c.votes.length}/${threshold(c)} signatures`).join('\n'):'No active recall campaign',stateKey:state}});series.set('geoJSON',geo);series.data.setAll(data);series.mapPolygons.template.events.on('click',ev=>{const d=ev.target.dataItem?.dataContext,c=getData('recallng_campaigns').find(x=>x.state===d?.stateKey);if(c)openCampaignDetail(c.id)});chart.appear(800,100)})})}
 
 function renderAll(){renderStats();renderCampaigns();renderStateSummary();renderCharts();renderLetterOptions()}
 async function startRecallNG(){
