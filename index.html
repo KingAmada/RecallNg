@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>RecallNG | Nigerian Constituency Accountability &amp; Legislative Recall Platform</title>
 <meta name="description" content="RecallNG helps Nigerian constituents identify elected legislators, organize lawful recall campaigns, track petition thresholds and prepare accountable, INEC-ready civic records.">
 <meta name="keywords" content="Nigeria recall petition, legislative accountability, Nigerian Senate, House of Representatives, State House of Assembly, constituency, INEC, civic participation, elected representatives">
@@ -1251,6 +1251,123 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
   .public-menu-button{display:grid;place-items:center}
 }
 
+/* Application shell and small-screen hardening */
+html,body{width:100%;max-width:100%;overflow-x:clip}
+img,svg,canvas{max-width:100%}
+.main,.content,.page,.grid,.card,.campaign,.section-title>*{min-width:0}
+.nav-icon{display:inline-grid;place-items:center;flex:0 0 auto;font-size:17px;line-height:1}
+.nav-label{min-width:0}
+.label-compact{display:none}
+.data-status{margin:0 0 16px;padding:12px 14px;border:1px solid #bae6fd;border-radius:14px;background:#f0f9ff;color:#075985;font-size:13px;font-weight:700}
+.data-status.error{border-color:#fecaca;background:#fef2f2;color:#991b1b}
+.map-card{padding:16px}
+#miniMap,#chartdiv{isolation:isolate;background:#eef5f1}
+.map-fallback{height:100%;min-height:260px;display:grid;place-items:center;text-align:center;padding:24px;color:var(--text-muted);background:#f1f5f9;border-radius:14px}
+.chart-wrap{width:100%;min-width:0;overflow:hidden}
+.chart-wrap canvas{display:block;width:100%!important;max-width:100%!important}
+.letter,.print-page{width:100%;overflow-wrap:anywhere}
+.print-chart-card{min-width:0}
+.print-chart-card h3{line-height:1.35;overflow-wrap:anywhere}
+
+@media(max-width:850px){
+  body:not(.public-home){padding-bottom:calc(72px + env(safe-area-inset-bottom))}
+  body:not(.public-home) .layout{width:100%;max-width:100%}
+  body:not(.public-home) .sidebar{
+    left:0;right:0;bottom:0;width:100%;height:calc(66px + env(safe-area-inset-bottom));
+    padding:5px 6px calc(5px + env(safe-area-inset-bottom));overflow:hidden;
+  }
+  body:not(.public-home) .nav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px;width:100%;margin:0}
+  body:not(.public-home) .nav button{
+    min-width:0;min-height:54px;padding:6px 2px;border-radius:13px;display:grid;
+    grid-template-rows:21px auto;place-items:center;align-content:center;gap:2px;
+    text-align:center;white-space:normal;font-size:clamp(8px,1.35vw,10px);line-height:1.05;
+  }
+  body:not(.public-home) .nav button:hover{transform:none}
+  body:not(.public-home) .nav button.active{border:0;border-bottom:2px solid #10b981;border-radius:13px;background:rgba(16,185,129,.12)}
+  body:not(.public-home) .nav-icon{font-size:17px}
+  body:not(.public-home) .topbar{
+    width:100%;height:auto;min-height:82px;padding:12px 18px;gap:16px;
+    display:grid;grid-template-columns:minmax(0,1fr) auto;top:0;
+  }
+  body:not(.public-home) .topbar>div:first-child{min-width:0}
+  body:not(.public-home) .topbar small{display:block;font-size:11px;line-height:1.3}
+  body:not(.public-home) .topbar h1{font-size:clamp(21px,4vw,25px);line-height:1.15;overflow-wrap:anywhere}
+  body:not(.public-home) .top-actions{min-width:0;gap:8px}
+  body:not(.public-home) .top-actions .btn{min-width:0;white-space:nowrap;line-height:1.2}
+  body:not(.public-home) .content{width:100%;max-width:100%;padding:22px 18px 18px}
+  .hero,.detail-hero{text-align:left;padding:30px 24px}
+  .hero h2{font-size:clamp(32px,8vw,42px);line-height:1.08;letter-spacing:-1.5px}
+  .hero .pill{font-size:11px;white-space:normal;justify-content:center;line-height:1.4}
+  .card:hover,.campaign:hover,.form-section:hover{transform:none}
+  .chart-wrap{height:clamp(230px,62vw,300px)}
+  #miniMap{height:clamp(300px,82vw,390px)!important}
+  #chartdiv{height:clamp(390px,108vw,540px)}
+  .section-title{margin:34px 0 18px}
+  .section-title h2{font-size:clamp(24px,6vw,29px);line-height:1.15;overflow-wrap:anywhere}
+  .campaign-top{flex-direction:column;gap:12px}
+  .campaign-top>*{max-width:100%}
+  .letter,.print-page{padding:34px 28px}
+  .letter-signatures{gap:30px}
+}
+
+@media(max-width:560px){
+  body:not(.public-home) .topbar{grid-template-columns:1fr;padding:11px 16px 13px;gap:10px}
+  body:not(.public-home) .topbar>div:first-child{display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  body:not(.public-home) .topbar small{max-width:58%;font-size:10px}
+  body:not(.public-home) .top-actions{display:grid;grid-template-columns:1fr 1fr;width:100%}
+  body:not(.public-home) .top-actions .btn{min-height:44px;padding:10px 8px;font-size:12px}
+  .label-wide{display:none}
+  .label-compact{display:inline}
+  body:not(.public-home) .content{padding:16px 14px 16px}
+  .dashboard-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  .detail-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}
+  .dashboard-stats .stat-card{min-height:142px;padding:15px;justify-content:flex-start}
+  .dashboard-stats .stat-card .icon{width:40px;height:40px;margin-bottom:12px;border-radius:12px;font-size:17px}
+  .dashboard-stats .stat-card small{font-size:11px;line-height:1.3}
+  .dashboard-stats .stat-card strong{font-size:28px;line-height:1.15;margin-top:7px}
+  .detail-stats .detail-metric{min-height:126px;padding:16px;display:flex;flex-direction:column;justify-content:center}
+  .detail-stats .detail-metric strong{font-size:clamp(22px,7vw,29px);line-height:1.15;overflow-wrap:anywhere}
+  .hero,.detail-hero{padding:24px 18px;border-radius:20px}
+  .hero h2{font-size:clamp(29px,9vw,36px);letter-spacing:-1.2px}
+  .hero p{font-size:14px;line-height:1.7;margin-bottom:24px}
+  .hero-panel,.politician-card{padding:18px}
+  .hero-stat strong{font-size:23px}
+  .card,.campaign,.form-section{padding:17px;border-radius:19px}
+  .section-title{margin:30px 0 16px}
+  .section-title .btn,.campaign-heading-actions>.btn{width:100%}
+  .campaign-heading-actions{display:grid;grid-template-columns:1fr;width:100%}
+  .view-toggle{width:100%;display:grid;grid-template-columns:1fr 1fr}
+  .filter-shell{padding:15px;border-radius:19px}
+  .letter,.print-page{padding:24px 18px;border-radius:18px;font-size:14px;line-height:1.7}
+  .letter h2,.print-page>h2{font-size:16px;line-height:1.45;margin:24px 0;overflow-wrap:anywhere}
+  .letter-signatures{grid-template-columns:1fr;gap:34px;margin-top:34px}
+  .lead-signature{width:min(180px,100%)}
+  .print-summary{gap:8px}
+  .print-summary div{padding:11px}
+  .print-summary strong{font-size:20px}
+  .print-chart-card{height:275px;padding:12px}
+  .print-chart-card canvas{height:205px!important;max-height:205px!important}
+  #printVoterSchedule{width:100%;overflow:hidden}
+  #printVoterSchedule table,#printVoterSchedule tbody,#printVoterSchedule tr,#printVoterSchedule td{display:block;width:100%}
+  #printVoterSchedule thead{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  #printVoterSchedule tr{margin:0 0 12px;border:1px solid var(--border);border-radius:13px;overflow:hidden;background:#fff}
+  #printVoterSchedule td{display:grid;grid-template-columns:minmax(82px,.75fr) minmax(0,1.25fr);gap:10px;padding:9px 11px;border:0;border-bottom:1px solid var(--border);white-space:normal;overflow-wrap:anywhere;font-size:11px}
+  #printVoterSchedule td:last-child{border-bottom:0}
+  #printVoterSchedule td::before{content:attr(data-label);font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:.35px;color:var(--text-muted)}
+  .signature-thumb{max-width:100%;height:auto}
+  .modal-card{padding:18px 16px}
+  .modal-head{top:-18px;margin-bottom:22px;padding-bottom:16px}
+  .modal-head h2{font-size:24px;line-height:1.15}
+  .modal-actions{bottom:-18px;grid-template-columns:1fr}
+}
+
+@media(max-width:360px){
+  body:not(.public-home) .nav button{font-size:8px;padding-inline:1px}
+  body:not(.public-home) .content{padding-inline:11px}
+  .dashboard-stats .stat-card{padding:13px}
+  .letter,.print-page{padding-inline:14px}
+}
+
 </style>
 </head>
 <body class="public-home">
@@ -1259,12 +1376,12 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
   <div class="brand"><div class="logo">R</div> RecallNG</div>
   <div class="side-label">Civic Dashboard</div>
   <div class="nav">
-    <button class="active" data-page="home">⌂ Home</button>
-    <button data-page="dashboard">▦ Dashboard</button>
-    <button data-page="campaigns">◉ Recall Campaigns</button>
-    <button data-page="map">⌖ Nigeria Map</button>
-    <button data-page="analytics">↗ Analytics</button>
-    <button data-page="letter">▤ INEC Letter</button>
+    <button class="active" data-page="home"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-label">Home</span></button>
+    <button data-page="dashboard"><span class="nav-icon" aria-hidden="true">▦</span><span class="nav-label">Dashboard</span></button>
+    <button data-page="campaigns"><span class="nav-icon" aria-hidden="true">◉</span><span class="nav-label">Campaigns</span></button>
+    <button data-page="map"><span class="nav-icon" aria-hidden="true">⌖</span><span class="nav-label">Map</span></button>
+    <button data-page="analytics"><span class="nav-icon" aria-hidden="true">↗</span><span class="nav-label">Analytics</span></button>
+    <button data-page="letter"><span class="nav-icon" aria-hidden="true">▤</span><span class="nav-label">INEC</span></button>
   </div>
   <div class="side-note"><strong>Legal boundary</strong><br>RecallNG organizes constituents. It does not replace INEC verification, BVAS authentication or the official referendum.</div>
 </aside>
@@ -1273,8 +1390,8 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
 <header class="topbar">
   <div><small class="muted">Constituency accountability</small><h1 id="pageTitle">Home</h1></div>
   <div class="top-actions">
-    <button class="btn btn-light" id="exportDashboard">Export dashboard image</button>
-    <button class="btn btn-primary" data-open-campaign>Start campaign</button>
+    <button class="btn btn-light" id="exportDashboard"><span class="label-wide">Export dashboard image</span><span class="label-compact">Export image</span></button>
+    <button class="btn btn-primary" data-open-campaign><span class="label-wide">Start campaign</span><span class="label-compact">Start campaign</span></button>
   </div>
 </header>
 
@@ -1335,9 +1452,9 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
           <div class="hero-law-mark"><small>Constitution</small><strong>69</strong><span>Power to recall</span></div>
         </div>
         <div class="hero-live-data">
-          <div><strong id="homeLiveSignatures">0</strong><span>signed records</span></div>
+          <div><strong id="homeLiveSignatures">—</strong><span>signed records</span></div>
           <i></i>
-          <div><strong id="homeLiveCampaigns">0</strong><span>active campaigns</span></div>
+          <div><strong id="homeLiveCampaigns">—</strong><span>active campaigns</span></div>
           <i></i>
           <div><strong>INEC</strong><span>structured package</span></div>
         </div>
@@ -1429,6 +1546,7 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
 </section>
 
 <section class="page" id="dashboardPage">
+  <div class="data-status" id="dataStatus" role="status" aria-live="polite" hidden></div>
   <div class="hero">
     <div>
       <span class="pill">🇳🇬 Constituency accountability in action</span>
@@ -1438,17 +1556,17 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
     </div>
     <div class="hero-panel">
       <small>National organizing snapshot</small>
-      <div class="hero-stat"><span>Registered constituents</span><strong id="heroVoters">0</strong></div>
-      <div class="hero-stat"><span>Active campaigns</span><strong id="heroCampaigns">0</strong></div>
-      <div class="hero-stat"><span>Recall votes recorded</span><strong id="heroVotes">0</strong></div>
+      <div class="hero-stat"><span>Registered constituents</span><strong id="heroVoters">—</strong></div>
+      <div class="hero-stat"><span>Active campaigns</span><strong id="heroCampaigns">—</strong></div>
+      <div class="hero-stat"><span>Recall votes recorded</span><strong id="heroVotes">—</strong></div>
     </div>
   </div>
 
-  <div class="grid grid-4" style="margin-top:17px">
-    <div class="card stat-card"><div class="icon">V</div><small>Registered voters</small><strong id="statVoters">0</strong></div>
-    <div class="card stat-card"><div class="icon">C</div><small>Campaigns</small><strong id="statCampaigns">0</strong></div>
-    <div class="card stat-card"><div class="icon">✓</div><small>Recall votes</small><strong id="statVotes">0</strong></div>
-    <div class="card stat-card"><div class="icon">%</div><small>Highest progress</small><strong id="statProgress">0%</strong></div>
+  <div class="grid grid-4 dashboard-stats" style="margin-top:17px">
+    <div class="card stat-card"><div class="icon">V</div><small>Registered voters</small><strong id="statVoters">—</strong></div>
+    <div class="card stat-card"><div class="icon">C</div><small>Campaigns</small><strong id="statCampaigns">—</strong></div>
+    <div class="card stat-card"><div class="icon">✓</div><small>Recall votes</small><strong id="statVotes">—</strong></div>
+    <div class="card stat-card"><div class="icon">%</div><small>Highest progress</small><strong id="statProgress">—</strong></div>
   </div>
 
   <div class="grid grid-2" style="margin-top:17px">
@@ -1504,16 +1622,16 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
 
 <section class="page" id="mapPage">
   <div class="section-title"><div><h2>Interactive Nigeria campaign map</h2><span class="muted">Campaign activity and registered constituent support by state.</span></div></div>
-  <div class="card"><div id="chartdiv"></div></div>
+  <div class="card map-card"><div id="chartdiv" aria-label="Interactive map of recall campaign activity across Nigerian states"></div></div>
   <div class="grid grid-3" style="margin-top:17px" id="stateSummary"></div>
 </section>
 
 <section class="page" id="campaignDetailPage">
 <button class="back-link" id="backToCampaigns">← Back to campaigns</button>
 <div class="detail-hero"><div><span class="pill" id="detailStatusPill">Recall campaign</span><h2 id="detailRepName" style="font-size:48px;line-height:1;margin:15px 0 8px">Representative</h2><p id="detailOfficeLine"></p><p id="detailReason"></p><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btn-light" id="detailShareBtn">Share petition</button><button class="btn btn-light" id="detailWhatsAppBtn">Share on WhatsApp</button></div></div><div class="politician-card"><div class="politician-avatar" id="detailInitials">RP</div><strong id="detailPoliticianName">Representative</strong><p id="detailPoliticianMeta" style="margin-bottom:0"></p><hr style="border:0;border-top:1px solid rgba(255,255,255,.2);margin:17px 0"><small>Campaign opened</small><div id="detailCreatedAt" style="font-weight:800;margin-top:5px"></div></div></div>
-<div class="grid grid-4" style="margin-top:17px"><div class="detail-metric"><small class="muted">Petition signatures</small><strong id="detailVotes">0</strong></div><div class="detail-metric"><small class="muted">60% safety target</small><strong id="detailThreshold">0</strong></div><div class="detail-metric"><small class="muted">Progress</small><strong id="detailProgress">0%</strong></div><div class="detail-metric"><small class="muted">Remaining</small><strong id="detailRemaining">0</strong></div>
+<div class="grid grid-4 detail-stats" style="margin-top:17px"><div class="detail-metric"><small class="muted">Petition signatures</small><strong id="detailVotes">0</strong></div><div class="detail-metric"><small class="muted">60% safety target</small><strong id="detailThreshold">0</strong></div><div class="detail-metric"><small class="muted">Progress</small><strong id="detailProgress">0%</strong></div><div class="detail-metric"><small class="muted">Remaining</small><strong id="detailRemaining">0</strong></div>
     <div class="detail-metric"><small class="muted">2023 avg. voters per PU</small><strong id="detailAvgPerPU">0</strong></div></div>
-<div class="grid grid-2" style="margin-top:17px;align-items:start"><div class="grid"><div class="card"><h3>Recall progress</h3><p class="muted">Progress toward the petition threshold entered for the constituency.</p><div class="progress" style="height:16px"><span id="detailProgressBar" style="width:0%"></span></div><div style="display:flex;justify-content:space-between"><span id="detailProgressText">0 of 0</span><strong id="detailStatusText">Organizing</strong></div></div><div class="card"><h3>Campaign analytics</h3><div class="chart-wrap"><canvas id="detailCampaignChart"></canvas></div></div><div class="card"><h3>Support by polling unit</h3><div class="chart-wrap"><canvas id="detailPollingChart"></canvas></div></div><div class="card"><h3>Campaign evidence and grounds</h3><p id="detailGrounds" class="muted"></p></div></div>
+<div class="grid grid-2" style="margin-top:17px;align-items:start"><div class="grid"><div class="card"><h3>Recall progress</h3><p class="muted">Progress toward the petition threshold entered for the constituency.</p><div class="progress" style="height:16px"><span id="detailProgressBar" style="width:0%"></span></div><div style="display:flex;justify-content:space-between"><span id="detailProgressText">0 of 0</span><strong id="detailStatusText">Organizing</strong></div></div><div class="card"><h3>Campaign analytics</h3><div class="chart-wrap"><canvas id="detailCampaignChart"></canvas></div></div><div class="card"><h3>Signatures vs 2023 state average voters per polling unit</h3><div class="chart-wrap"><canvas id="detailAverageChart"></canvas></div></div><div class="card"><h3>Support by polling unit</h3><div class="chart-wrap"><canvas id="detailPollingChart"></canvas></div></div><div class="card"><h3>Campaign evidence and grounds</h3><p id="detailGrounds" class="muted"></p></div></div>
 <div id="supportPanelHome"></div><div class="card support-panel" id="supportPanel"><span class="badge">SIGN PETITION</span><h2>Support this recall</h2><p class="muted">Your support counts only after you provide your voter details, polling unit and signature.</p><div class="notice warning">This is a petition signature, not the official INEC referendum vote. The details remain subject to INEC verification.</div><form id="detailSupportForm" style="margin-top:17px"><div class="form-row"><label>Full name</label><input id="supportName" required></div><div class="form-grid"><div class="form-row"><label>VIN</label><input id="supportVIN" required minlength="8"></div><div class="form-row"><label>Date of birth</label><input id="supportDOB" type="date" required></div></div><div class="form-row"><label>Phone number</label><input id="supportPhone" type="text" inputmode="numeric" pattern="[0-9]{11}" minlength="11" maxlength="11" required placeholder="08012345678"></div><div class="form-grid"><div class="form-row"><label>State</label><select id="supportState" required></select></div><div class="form-row"><label>LGA</label><select id="supportLGA" required disabled></select></div><div class="form-row"><label>Ward</label><select id="supportWard" required disabled></select></div><div class="form-row"><label>Polling unit</label><select id="supportPolling" required disabled></select></div></div><div class="signature-box"><label>Signature</label><canvas id="supportSignatureCanvas" width="700" height="180"></canvas><button class="btn btn-light btn-small" type="button" id="clearSupportSignature">Clear signature</button></div><label style="display:flex;gap:9px;align-items:flex-start;font-weight:500;margin-top:14px"><input type="checkbox" style="width:auto;margin-top:3px" required>I confirm that I am the named registered voter and authorize my details and signature to be included in the petitioners’ schedule.</label><label class="legal-consent"><input id="supportLegalConsent" type="checkbox" required><span>I have read and agree to the <a href="#termsModal" data-open-legal="termsModal">Terms &amp; Conditions</a> and the <a href="#privacyModal" data-open-legal="privacyModal">NDPR Privacy Notice</a>.</span></label><button class="btn btn-primary" type="submit" style="width:100%;margin-top:15px">Sign and count my support</button></form></div></div></section>
 <section class="page" id="analyticsPage">
   <div class="section-title"><div><h2>Campaign analytics</h2><span class="muted">Informative charts suitable for campaign reporting and dashboard screenshots.</span></div><button class="btn btn-light" id="exportAnalytics">Download analytics screenshot</button></div>
@@ -1812,21 +1930,18 @@ body.public-home .home-page{max-width:1280px;padding:28px 28px 64px;margin:0 aut
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/map.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
-<script src="https://cdn.amcharts.com/lib/5/geodata/data/countries2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.52.0/dist/umd/supabase.min.js"></script>
 <script>
 const SUPABASE_URL='https://ncunibzyejyclfsnnsza.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY='sb_publishable_-5eR2UiIp54-Sc-LeHuefQ_U8I1LOdz';
-const supabaseClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
 const POLLING_DATA_URL='https://raw.githubusercontent.com/afeibukun/nigerian-state-lgas-wards-polling-units/refs/heads/main/states-and-lgas-and-wards-and-polling-units.json';
-const GEOJSON_URL='https://raw.githubusercontent.com/wmgeolab/geoBoundaries/main/releaseData/gbOpen/NGA/ADM1/geoBoundaries-NGA-ADM1.geojson';
+const GEOJSON_URL='https://cdn.amcharts.com/lib/5/geodata/json/nigeriaLow.json';
 let pollingData=[];
 let maps=[];
+const mapInstances=new Map();
+const mapLayers=new Map();
+let nigeriaGeoJSON=null;
 let charts={};
 let activeShareCampaignId='';
 let activeShareVoterId='';let activeDetailCampaignId='';let supportSignatureData='';
@@ -1835,9 +1950,39 @@ let databaseSenators=[];
 let databaseHouseRepresentatives=[];
 let databaseStateAssembly=[];
 
+async function supabaseRpc(name,args={}){
+  try{
+    const response=await fetch(`${SUPABASE_URL}/rest/v1/rpc/${name}`,{
+      method:'POST',
+      headers:{apikey:SUPABASE_PUBLISHABLE_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify(args)
+    });
+    const raw=await response.text();
+    const payload=raw?JSON.parse(raw):null;
+    if(!response.ok){
+      const error=payload&&typeof payload==='object'?payload:{message:`Database request failed (${response.status})`};
+      error.status=response.status;
+      return {data:null,error};
+    }
+    return {data:payload,error:null};
+  }catch(error){
+    return {data:null,error};
+  }
+}
+
+async function readSupabaseRpc(name,attempts=3){
+  let lastError;
+  for(let attempt=0;attempt<attempts;attempt++){
+    const result=await supabaseRpc(name);
+    if(!result.error)return result.data;
+    lastError=result.error;
+    if(attempt<attempts-1)await new Promise(resolve=>setTimeout(resolve,300*(attempt+1)));
+  }
+  throw lastError;
+}
+
 async function loadWinnersDatabase(){
-  const {data:rows,error}=await supabaseClient.rpc('get_winners_json');
-  if(error)throw error;
+  const rows=await readSupabaseRpc('get_winners_json');
   if(!rows?.length)throw new Error('The winners database returned no elected representatives.');
   databaseSenators=rows.filter(row=>row.chamber==='SENATE').map(row=>({
     state:row.state,sn:row.serial_number,district:row.constituency,candidate:row.candidate_name,
@@ -1913,6 +2058,13 @@ const $=id=>document.getElementById(id);
 const titleCase=s=>String(s||'').replace(/-/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
 const getData=key=>appData[key]||[];
 const setData=(key,val)=>{appData[key]=val};
+function setDataStatus(message='',type=''){
+  const status=$('dataStatus');
+  if(!status)return;
+  status.hidden=!message;
+  status.className='data-status'+(type?` ${type}`:'');
+  status.textContent=message;
+}
 function campaignFromDatabase(row){
   return {
     id:row.id,representative:row.representative,state:row.state,lga:row.lga,
@@ -1930,17 +2082,26 @@ function campaignFromDatabase(row){
   };
 }
 async function loadApplicationData(){
-  const [{data:voters,error:voterError},{data:campaigns,error:campaignError}]=await Promise.all([
-    supabaseClient.rpc('list_public_voters'),
-    supabaseClient.rpc('list_campaigns')
+  setDataStatus('Loading current campaign data…');
+  const [voterResult,campaignResult]=await Promise.allSettled([
+    readSupabaseRpc('list_public_voters'),
+    readSupabaseRpc('list_campaigns')
   ]);
-  if(voterError)throw voterError;
-  if(campaignError)throw campaignError;
-  setData('recallng_voters',(voters||[]).map(v=>({
-    id:v.id,name:'Anonymous constituent',vin:v.vin,phone:v.phone,state:v.state,
-    lga:v.lga,ward:v.ward,pollingUnit:v.polling_unit,createdAt:v.created_at
-  })));
-  setData('recallng_campaigns',(campaigns||[]).map(campaignFromDatabase));
+  if(voterResult.status==='fulfilled'){
+    setData('recallng_voters',(voterResult.value||[]).map(v=>({
+      id:v.id,name:'Anonymous constituent',vin:v.vin,phone:v.phone,state:v.state,
+      lga:v.lga,ward:v.ward,pollingUnit:v.polling_unit,createdAt:v.created_at
+    })));
+  }
+  if(campaignResult.status==='fulfilled'){
+    setData('recallng_campaigns',(campaignResult.value||[]).map(campaignFromDatabase));
+  }
+  const failures=[voterResult,campaignResult].filter(result=>result.status==='rejected');
+  if(failures.length){
+    setDataStatus('Some live totals could not be refreshed. Check your connection and try again.','error');
+    throw failures[0].reason;
+  }
+  setDataStatus();
 }
 const escapeHTML=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 const maskVIN=s=>s.length<6?'••••':s.slice(0,3)+'••••••'+s.slice(-3);
@@ -2100,14 +2261,26 @@ function initPublicNavigation(){
   }));
 }
 
+function renderPageVisuals(name){
+  requestAnimationFrame(()=>window.setTimeout(()=>{
+    if(name==='dashboard'){
+      renderCharts('dashboard');
+      initMap('miniMap');
+    }
+    if(name==='analytics')renderCharts('analytics');
+    if(name==='map')initMap('chartdiv');
+    maps.forEach(map=>map.invalidateSize(true));
+  },40));
+}
+
 function showPage(name){
   document.body.classList.toggle('public-home',name==='home');
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   $(name+'Page').classList.add('active');
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
-  $('pageTitle').textContent=name==='home'?'Home':titleCase(name);
-  if(name==='map') setTimeout(()=>maps.forEach(m=>m.invalidateSize()),100);
-  if(name==='analytics') renderCharts();
+  const pageTitles={home:'Home',dashboard:'Dashboard',campaigns:'Campaigns',map:'Map',analytics:'Analytics',letter:'INEC Letter',campaignDetail:'Campaign'};
+  $('pageTitle').textContent=pageTitles[name]||titleCase(name);
+  renderPageVisuals(name);
   if(name==='letter'){
     renderLetterOptions();
     const selected=getData('recallng_campaigns').find(c=>c.id===$('letterCampaignSelect').value);
@@ -2653,7 +2826,7 @@ $('campaignForm').onsubmit=async e=>{
     leadPetitionerEmail:initiatorEmail,
     evidence:''
   };
-  const {error}=await supabaseClient.rpc('create_campaign',{p_voter:voterPayload,p_campaign:campaignPayload});
+  const {error}=await supabaseRpc('create_campaign',{p_voter:voterPayload,p_campaign:campaignPayload});
   if(error){
     const duplicate=error.code==='23505';
     showNotification(duplicate?'This voter or campaign already exists. Use the existing campaign support form.':'The campaign could not be saved. Please try again.','error','Database error');
@@ -2677,7 +2850,15 @@ $('campaignForm').onsubmit=async e=>{
 
 function threshold(c){return Math.ceil(Number(c.registeredVoters)*0.60)}
 function pct(c){return Math.min(100,(c.votes.length/threshold(c))*100)}
-function campaignHTML(c){const status=c.votes.length>=threshold(c)?'Threshold reached':'Recall organizing underway';return `<article class="campaign clickable-campaign" onclick="openCampaignDetail('${c.id}')"><div class="campaign-top"><div><span class="badge">${escapeHTML(c.office)}</span><h3 style="margin:9px 0 3px">${escapeHTML(c.representative)}</h3><small class="muted">${titleCase(c.state)} · ${escapeHTML(c.constituency)}</small></div><div style="text-align:right"><strong style="font-size:25px">${fmt(c.votes.length)}</strong><br><small class="muted">of ${fmt(threshold(c))} required</small></div></div><p class="muted">${escapeHTML(c.reason)}</p><div class="progress"><span style="width:${pct(c)}%"></span></div><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><small><strong>${status}</strong> · ${pct(c).toFixed(2)}% of petition threshold<br><span class="benchmark">${fmt(c.votes.length)} signed vs ${fmt(c.averageVotersPerPU||averageVotersPerPU2023[normalizeStateKey(c.state)]||0)} average voters per PU</span></small><div><button class="btn btn-light btn-small" onclick="event.stopPropagation();openShare('${c.id}')">Share</button> <button class="btn btn-light btn-small" onclick="event.stopPropagation();openCampaignDetail('${c.id}')">View campaign</button> <button class="btn btn-primary btn-small" onclick="event.stopPropagation();openVote('${c.id}')">Support recall</button></div></div></article>`}
+function formatProgress(value){
+  const progress=Number(value||0);
+  if(progress<=0)return '0%';
+  if(progress<.001)return '<0.001%';
+  if(progress<.01)return progress.toFixed(3)+'%';
+  if(progress<.1)return progress.toFixed(2)+'%';
+  return progress.toFixed(1)+'%';
+}
+function campaignHTML(c){const progress=pct(c),status=c.votes.length>=threshold(c)?'Threshold reached':'Recall organizing underway';return `<article class="campaign clickable-campaign" onclick="openCampaignDetail('${c.id}')"><div class="campaign-top"><div><span class="badge">${escapeHTML(c.office)}</span><h3 style="margin:9px 0 3px">${escapeHTML(c.representative)}</h3><small class="muted">${titleCase(c.state)} · ${escapeHTML(c.constituency)}</small></div><div style="text-align:right"><strong style="font-size:25px">${fmt(c.votes.length)}</strong><br><small class="muted">of ${fmt(threshold(c))} required</small></div></div><p class="muted">${escapeHTML(c.reason)}</p><div class="progress"><span style="width:${progress>0?Math.max(.8,progress):0}%"></span></div><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><small><strong>${status}</strong> · ${escapeHTML(formatProgress(progress))} of petition threshold<br><span class="benchmark">${fmt(c.votes.length)} signed vs ${fmt(c.averageVotersPerPU||averageVotersPerPU2023[normalizeStateKey(c.state)]||0)} average voters per PU</span></small><div><button class="btn btn-light btn-small" onclick="event.stopPropagation();openShare('${c.id}')">Share</button> <button class="btn btn-light btn-small" onclick="event.stopPropagation();openCampaignDetail('${c.id}')">View campaign</button> <button class="btn btn-primary btn-small" onclick="event.stopPropagation();openVote('${c.id}')">Support recall</button></div></div></article>`}
 function campaignMatchesLGA(campaign,lga,voters){
   const wanted=normalizeWords(lga);
   if(!wanted)return true;
@@ -2755,36 +2936,76 @@ window.openVote=id=>{
 };
 
 async function initMap(id){
-  const el=$(id);if(!window.L){el.innerHTML='<div class="map-fallback">Map library unavailable. Campaign state summaries remain available below.</div>';return}
-  const map=L.map(id,{zoomControl:true,scrollWheelZoom:false,keyboard:false}).setView([9.08,8.68],6);
+  const el=$(id);
+  if(!el)return;
+  if(!window.L){
+    el.innerHTML='<div class="map-fallback">The map library could not be loaded. Campaign state summaries remain available below.</div>';
+    return;
+  }
+  if(mapInstances.has(id)){
+    const existing=mapInstances.get(id);
+    existing.invalidateSize(true);
+    refreshMapLayer(id);
+    return existing;
+  }
+  const map=L.map(id,{zoomControl:true,scrollWheelZoom:false,keyboard:true,attributionControl:true}).setView([9.08,8.68],6);
+  mapInstances.set(id,map);
   maps.push(map);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'&copy; OpenStreetMap'}).addTo(map);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:18,attribution:'&copy; OpenStreetMap',crossOrigin:true
+  }).addTo(map);
   try{
-    const geo=await fetch(GEOJSON_URL).then(r=>{if(!r.ok)throw Error();return r.json()});
-    const stateVotes=stateVoteCounts();
-    const campaigns=getData('recallng_campaigns');
-    L.geoJSON(geo,{
-      style:f=>{
-        const n=(f.properties.shapeName||'').toLowerCase(),count=stateVotes[n]||0;
-        return{color:'#fff',weight:1,fillColor:count>10?'#075c31':count>3?'#12a05a':count>0?'#7bc99e':'#d8e6dc',fillOpacity:.88}
-      },
-      onEachFeature:(f,l)=>{
-        const displayName=f.properties.shapeName||'State',stateKey=displayName.toLowerCase();
-        const stateCampaigns=campaigns.filter(c=>c.state===stateKey);
-        const campaignRows=stateCampaigns.length?stateCampaigns.map(c=>{
-          const reached=c.votes.length>=threshold(c);
-          return `<div style="margin:9px 0;padding:8px;background:#f2f7f4;border-radius:8px"><strong>${escapeHTML(c.representative)}</strong><br><small>${reached?'Threshold reached':'Recall underway'} · ${fmt(c.votes.length)} of ${fmt(threshold(c))} required signatures</small></div>`
-        }).join(''):'<small>No active recall campaign.</small>';
-        l.bindPopup(`<div style="min-width:245px"><h3 style="margin:0 0 8px">${escapeHTML(displayName)}</h3><strong>Active recall campaigns</strong>${campaignRows}</div>`)
-      }
-    }).addTo(map);
-  }catch{
+    if(!nigeriaGeoJSON){
+      const response=await fetch(GEOJSON_URL);
+      if(!response.ok)throw new Error('Nigeria boundary data unavailable');
+      nigeriaGeoJSON=await response.json();
+    }
+    refreshMapLayer(id);
+    const layer=mapLayers.get(id);
+    if(layer?.getBounds?.().isValid())map.fitBounds(layer.getBounds(),{padding:[12,12]});
+  }catch(error){
+    console.warn(error);
     L.marker([9.08,8.68]).addTo(map).bindPopup('Nigeria campaign activity');
   }
+  requestAnimationFrame(()=>map.invalidateSize(true));
+  return map;
+}
+function refreshMapLayer(id){
+  const map=mapInstances.get(id);
+  if(!map||!nigeriaGeoJSON||!window.L)return;
+  const previous=mapLayers.get(id);
+  if(previous)map.removeLayer(previous);
+  const stateVotes=stateVoteCounts();
+  const campaigns=getData('recallng_campaigns');
+  const layer=L.geoJSON(nigeriaGeoJSON,{
+    style:feature=>{
+      const stateKey=normalizeStateKey(feature.properties?.shapeName||feature.properties?.name||'');
+      const count=stateVotes[stateKey]||0;
+      return{color:'#fff',weight:1.2,fillColor:count>10?'#075c31':count>3?'#12a05a':count>0?'#7bc99e':'#d8e6dc',fillOpacity:.92}
+    },
+    onEachFeature:(feature,stateLayer)=>{
+      const displayName=feature.properties?.shapeName||feature.properties?.name||'State';
+      const stateKey=normalizeStateKey(displayName);
+      const stateCampaigns=campaigns.filter(c=>normalizeStateKey(c.state)===stateKey);
+      const campaignRows=stateCampaigns.length?stateCampaigns.map(c=>{
+        const reached=c.votes.length>=threshold(c);
+        return `<div style="margin:9px 0;padding:8px;background:#f2f7f4;border-radius:8px"><strong>${escapeHTML(c.representative)}</strong><br><small>${reached?'Threshold reached':'Recall underway'} · ${fmt(c.votes.length)} of ${fmt(threshold(c))} required signatures</small></div>`;
+      }).join(''):'<small>No active recall campaign.</small>';
+      stateLayer.bindPopup(`<div style="min-width:min(245px,70vw)"><h3 style="margin:0 0 8px">${escapeHTML(displayName)}</h3><strong>Active recall campaigns</strong>${campaignRows}</div>`);
+      stateLayer.on('click',()=>{
+        if(stateCampaigns.length)window.setTimeout(()=>openCampaignDetail(stateCampaigns[0].id),0);
+      });
+    }
+  }).addTo(map);
+  mapLayers.set(id,layer);
 }
 function stateVoteCounts(){
   const campaigns=getData('recallng_campaigns'),out={};
-  campaigns.forEach(c=>out[c.state]=(out[c.state]||0)+c.votes.length);return out;
+  campaigns.forEach(c=>{
+    const state=normalizeStateKey(c.state);
+    out[state]=(out[state]||0)+c.votes.length;
+  });
+  return out;
 }
 function renderStateSummary(){
   const counts=stateVoteCounts(),campaigns=getData('recallng_campaigns');
@@ -2797,31 +3018,56 @@ function renderStateSummary(){
 }
 
 function destroyChart(name){if(charts[name])charts[name].destroy()}
-function renderCharts(){
+function renderCharts(scope='visible'){
   if(!window.Chart)return;
   const campaigns=getData('recallng_campaigns'),voters=getData('recallng_voters'),stateCounts=stateVoteCounts();
-  const states=Object.keys(stateCounts).length?Object.keys(stateCounts):['No data'];
-  destroyChart('state');charts.state=new Chart($('stateChart'),{type:'bar',data:{labels:states.map(titleCase),datasets:[{label:'Recall support',data:states.map(s=>stateCounts[s]||0)}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
-  const chambers={};campaigns.forEach(c=>chambers[c.office]=(chambers[c.office]||0)+c.votes.length);
-  const chamberLabels=Object.keys(chambers).length?Object.keys(chambers):['No data'];
-  destroyChart('chamber');charts.chamber=new Chart($('chamberChart'),{type:'doughnut',data:{labels:chamberLabels,datasets:[{data:chamberLabels.map(x=>chambers[x]||1)}]},options:{responsive:true,maintainAspectRatio:false}});
-  const hierarchy={States:new Set(voters.map(v=>v.state)).size,LGAs:new Set(voters.map(v=>v.lga)).size,Wards:new Set(voters.map(v=>v.ward)).size,'Polling units':new Set(voters.map(v=>v.pollingUnit)).size};
-  destroyChart('polling');charts.polling=new Chart($('pollingChart'),{type:'bar',data:{labels:Object.keys(hierarchy),datasets:[{label:'Coverage',data:Object.values(hierarchy)}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
-  const labels=campaigns.length?campaigns.map(c=>c.representative.split(' ').slice(0,2).join(' ')):['No campaigns'];
-  destroyChart('threshold');charts.threshold=new Chart($('thresholdChart'),{type:'bar',data:{labels,datasets:[{label:'Threshold progress %',data:campaigns.length?campaigns.map(c=>pct(c)): [0]}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',scales:{x:{max:100}}}});
-  const dates={};campaigns.flatMap(c=>c.votes.map(v=>c.createdAt.slice(0,10))).forEach(d=>dates[d]=(dates[d]||0)+1);
-  const dateLabels=Object.keys(dates).sort();
-  destroyChart('trend');charts.trend=new Chart($('trendChart'),{type:'line',data:{labels:dateLabels.length?dateLabels:['No data'],datasets:[{label:'Petition signatures',data:dateLabels.length?dateLabels.map(d=>dates[d]):[0],tension:.35,fill:true}]},options:{responsive:true,maintainAspectRatio:false}});
+  const compact=window.matchMedia('(max-width:560px)').matches;
+  const common={responsive:true,maintainAspectRatio:false,animation:{duration:350},resizeDelay:80};
+  const renderDashboard=(scope==='dashboard'||scope==='all'||(scope==='visible'&&$('dashboardPage').classList.contains('active')));
+  const renderAnalytics=(scope==='analytics'||scope==='all'||(scope==='visible'&&$('analyticsPage').classList.contains('active')));
+
+  if(renderAnalytics){
+    const states=Object.keys(stateCounts).length?Object.keys(stateCounts):['No activity'];
+    destroyChart('state');
+    charts.state=new Chart($('stateChart'),{type:'bar',data:{labels:states.map(titleCase),datasets:[{label:'Recall support',data:states.map(s=>stateCounts[s]||0),backgroundColor:'#38a8e8'}]},options:{...common,plugins:{legend:{display:false}},scales:{x:{ticks:{maxRotation:compact?35:0,minRotation:0,autoSkip:true}},y:{beginAtZero:true,ticks:{precision:0}}}}});
+    const chambers={};campaigns.forEach(c=>chambers[c.office]=(chambers[c.office]||0)+c.votes.length);
+    const chamberLabels=Object.keys(chambers).length?Object.keys(chambers):['No activity'];
+    destroyChart('chamber');
+    charts.chamber=new Chart($('chamberChart'),{type:'doughnut',data:{labels:chamberLabels,datasets:[{data:chamberLabels.map(x=>chambers[x]||0),backgroundColor:['#059669','#38a8e8','#f59e0b','#8b5cf6']}]},options:{...common,cutout:'62%',plugins:{legend:{position:'bottom',labels:{boxWidth:12,padding:12}}}}});
+    const uniqueCount=key=>new Set(voters.map(v=>v[key]).filter(Boolean).map(normalizeWords)).size;
+    const hierarchy={States:uniqueCount('state'),LGAs:uniqueCount('lga'),Wards:uniqueCount('ward'),'Polling units':uniqueCount('pollingUnit')};
+    destroyChart('polling');
+    charts.polling=new Chart($('pollingChart'),{type:'bar',data:{labels:Object.keys(hierarchy),datasets:[{label:'Coverage',data:Object.values(hierarchy),backgroundColor:'rgba(56,168,232,.55)'}]},options:{...common,plugins:{legend:{display:false}},scales:{x:{ticks:{maxRotation:compact?25:0,minRotation:0}},y:{beginAtZero:true,ticks:{precision:0}}}}});
+    const labels=campaigns.length?campaigns.map(c=>c.representative.split(' ').slice(0,2).join(' ')):['No campaigns'];
+    destroyChart('threshold');
+    charts.threshold=new Chart($('thresholdChart'),{type:'bar',data:{labels,datasets:[{label:'Threshold progress %',data:campaigns.length?campaigns.map(c=>pct(c)):[0],backgroundColor:'#059669'}]},options:{...common,indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,max:100,ticks:{callback:value=>value+'%'}},y:{ticks:{autoSkip:false}}}}});
+  }
+
+  if(renderDashboard){
+    const voterById=new Map(voters.map(v=>[v.id,v]));
+    const dates={};
+    campaigns.forEach(c=>c.votes.forEach(voterId=>{
+      const timestamp=voterById.get(voterId)?.createdAt||c.createdAt;
+      if(timestamp){const day=String(timestamp).slice(0,10);dates[day]=(dates[day]||0)+1;}
+    }));
+    const dateLabels=Object.keys(dates).sort();
+    destroyChart('trend');
+    charts.trend=new Chart($('trendChart'),{type:'line',data:{labels:dateLabels.length?dateLabels:['No activity'],datasets:[{label:'Petition signatures',data:dateLabels.length?dateLabels.map(d=>dates[d]):[0],borderColor:'#059669',backgroundColor:'rgba(16,185,129,.16)',pointBackgroundColor:'#059669',tension:.35,fill:true}]},options:{...common,plugins:{legend:{display:false}},scales:{x:{ticks:{autoSkip:true,maxTicksLimit:compact?4:8}},y:{beginAtZero:true,ticks:{precision:0}}}}});
+  }
 }
 
 function renderStats(){
-  const voters=getData('recallng_voters'),campaigns=getData('recallng_campaigns'),votes=campaigns.reduce((a,c)=>a+c.votes.length,0),highest=campaigns.length?Math.max(...campaigns.map(pct)):0;
-  ['heroVoters','statVoters'].forEach(id=>$(id).textContent=fmt(voters.length));
+  const voters=getData('recallng_voters'),campaigns=getData('recallng_campaigns');
+  const voterIds=new Set(voters.map(v=>v.id));
+  campaigns.forEach(c=>c.votes.forEach(id=>voterIds.add(id)));
+  const registeredVoters=voterIds.size;
+  const votes=campaigns.reduce((a,c)=>a+c.votes.length,0),highest=campaigns.length?Math.max(...campaigns.map(pct)):0;
+  ['heroVoters','statVoters'].forEach(id=>$(id).textContent=fmt(registeredVoters));
   ['heroCampaigns','statCampaigns'].forEach(id=>$(id).textContent=fmt(campaigns.length));
   ['heroVotes','statVotes'].forEach(id=>$(id).textContent=fmt(votes));
-  $('statProgress').textContent=highest.toFixed(1)+'%';
+  $('statProgress').textContent=formatProgress(highest);
   if($('homeLiveSignatures')) $('homeLiveSignatures').textContent=fmt(votes);
-  if($('homeLiveCampaigns')) $('homeLiveCampaigns').textContent=`${fmt(campaigns.length)} active campaign${campaigns.length===1?'':'s'}`;
+  if($('homeLiveCampaigns')) $('homeLiveCampaigns').textContent=fmt(campaigns.length);
   if($('homeProofBar')) $('homeProofBar').style.width=Math.max(12,Math.min(100,highest||12))+'%';
 }
 function renderLetterOptions(){
@@ -2873,7 +3119,7 @@ function renderLetterAnalyticsAndVoters(campaign,forceCharts=false){
 
   $('printVotes').textContent=fmt(campaign.votes.length);
   $('printThreshold').textContent=fmt(required);
-  $('printProgress').textContent=progress.toFixed(1)+'%';
+  $('printProgress').textContent=formatProgress(progress);
   $('printRemaining').textContent=fmt(remaining);
 
   if(window.Chart && (forceCharts || $('letterPage').classList.contains('active'))){
@@ -2922,15 +3168,15 @@ function renderLetterAnalyticsAndVoters(campaign,forceCharts=false){
       <th>LGA</th><th>Ward</th><th>Polling unit</th><th>Signature</th>
     </tr></thead>
     <tbody>${sorted.map((v,i)=>`<tr>
-      <td>${i+1}</td>
-      <td>${maskWithAsterisks(v.name)}</td>
-      <td>${maskWithAsterisks(v.vin)}</td>
-      <td>${maskWithAsterisks(v.dob)}</td>
-      <td>${maskWithAsterisks(v.phone)}</td>
-      <td>${titleCase(v.lga)}</td>
-      <td>${titleCase(v.ward)}</td>
-      <td>${titleCase(v.pollingUnit)}</td>
-      <td>Signature on protected record</td>
+      <td data-label="S/N">${i+1}</td>
+      <td data-label="Name">${maskWithAsterisks(v.name)}</td>
+      <td data-label="VIN">${maskWithAsterisks(v.vin)}</td>
+      <td data-label="Date of birth">${maskWithAsterisks(v.dob)}</td>
+      <td data-label="Phone">${maskWithAsterisks(v.phone)}</td>
+      <td data-label="LGA">${escapeHTML(titleCase(v.lga))}</td>
+      <td data-label="Ward">${escapeHTML(titleCase(v.ward))}</td>
+      <td data-label="Polling unit">${escapeHTML(titleCase(v.pollingUnit))}</td>
+      <td data-label="Signature">Signature on protected record</td>
     </tr>`).join('')}</tbody>
   </table>`:'<p>No petitioners have signed this campaign.</p>';
 }
@@ -3075,7 +3321,7 @@ function initSupportSignature(){const canvas=$('supportSignatureCanvas');if(!can
 function setupSupportSelectors(){if(!$('supportState'))return;$('supportState').onchange=e=>{const s=pollingData.find(x=>x.state===e.target.value);$('supportLGA').disabled=!s;$('supportLGA').innerHTML='<option value="">Select LGA</option>'+(s?.lgas||[]).map(l=>`<option value="${escapeHTML(l.lga)}">${titleCase(l.lga)}</option>`).join('');$('supportWard').disabled=true;$('supportPolling').disabled=true};$('supportLGA').onchange=e=>{const s=pollingData.find(x=>x.state===$('supportState').value),l=s?.lgas.find(x=>x.lga===e.target.value);$('supportWard').disabled=!l;$('supportWard').innerHTML='<option value="">Select ward</option>'+(l?.wards||[]).map(w=>`<option value="${escapeHTML(w.ward)}">${titleCase(w.ward)}</option>`).join('');$('supportPolling').disabled=true};$('supportWard').onchange=e=>{const s=pollingData.find(x=>x.state===$('supportState').value),l=s?.lgas.find(x=>x.lga===$('supportLGA').value),w=l?.wards.find(x=>x.ward===e.target.value);$('supportPolling').disabled=!w;$('supportPolling').innerHTML='<option value="">Select polling unit</option>'+(w?.polling_units||[]).map(p=>`<option value="${escapeHTML(p)}">${titleCase(p)}</option>`).join('')}}
 function initials(n){return String(n||'RP').split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('').toUpperCase()}
 window.openCampaignDetail=id=>{activeDetailCampaignId=id;showPage('campaignDetail')};$('backToCampaigns').onclick=()=>showPage('campaigns');
-function renderCampaignDetail(){const c=getData('recallng_campaigns').find(x=>x.id===activeDetailCampaignId);if(!c)return;const voters=getData('recallng_voters').filter(v=>c.votes.includes(v.id)),req=threshold(c),prog=pct(c),rem=Math.max(0,req-c.votes.length),reached=c.votes.length>=req,avgPerPU=Number(c.averageVotersPerPU||averageVotersPerPU2023[normalizeStateKey(c.state)]||0);$('detailRepName').textContent=c.representative;$('detailOfficeLine').textContent=`${c.office} · ${c.constituency}, ${titleCase(c.state)}`;$('detailReason').textContent=c.reason;$('detailInitials').textContent=initials(c.representative);$('detailPoliticianName').textContent=c.representative;$('detailPoliticianMeta').textContent=`${c.office} representing ${c.constituency}`;$('detailCreatedAt').textContent=new Date(c.createdAt).toLocaleDateString('en-NG');$('detailVotes').textContent=fmt(c.votes.length);$('detailThreshold').textContent=fmt(req);$('detailProgress').textContent=prog.toFixed(1)+'%';$('detailRemaining').textContent=fmt(rem);$('detailProgressBar').style.width=prog+'%';$('detailProgressText').textContent=`${fmt(c.votes.length)} of ${fmt(req)} signatures`;$('detailStatusText').textContent=reached?'Threshold reached':'Organizing underway';$('detailStatusPill').textContent=reached?'Petition threshold reached':'Recall campaign underway';$('detailGrounds').textContent=c.reason;$('supportState').value=c.state;$('supportState').dispatchEvent(new Event('change'));$('detailShareBtn').onclick=()=>openShare(c.id);$('detailWhatsAppBtn').onclick=()=>shareWhatsApp(c.id);if(window.Chart){destroyChart('detailCampaign');charts.detailCampaign=new Chart($('detailCampaignChart'),{type:'doughnut',data:{labels:['Signed','Remaining'],datasets:[{data:[c.votes.length,rem]}]},options:{responsive:true,maintainAspectRatio:false}});const pc={};voters.forEach(v=>pc[titleCase(v.pollingUnit)]=(pc[titleCase(v.pollingUnit)]||0)+1);const labs=Object.keys(pc).length?Object.keys(pc):['No signatures'];destroyChart('detailAverage');
+function renderCampaignDetail(){const c=getData('recallng_campaigns').find(x=>x.id===activeDetailCampaignId);if(!c)return;const voters=getData('recallng_voters').filter(v=>c.votes.includes(v.id)),req=threshold(c),prog=pct(c),rem=Math.max(0,req-c.votes.length),reached=c.votes.length>=req,avgPerPU=Number(c.averageVotersPerPU||averageVotersPerPU2023[normalizeStateKey(c.state)]||0);$('detailRepName').textContent=c.representative;$('detailOfficeLine').textContent=`${c.office} · ${c.constituency}, ${titleCase(c.state)}`;$('detailReason').textContent=c.reason;$('detailInitials').textContent=initials(c.representative);$('detailPoliticianName').textContent=c.representative;$('detailPoliticianMeta').textContent=`${c.office} representing ${c.constituency}`;$('detailCreatedAt').textContent=new Date(c.createdAt).toLocaleDateString('en-NG');$('detailVotes').textContent=fmt(c.votes.length);$('detailThreshold').textContent=fmt(req);$('detailProgress').textContent=formatProgress(prog);$('detailRemaining').textContent=fmt(rem);$('detailAvgPerPU').textContent=fmt(avgPerPU);$('detailProgressBar').style.width=(prog>0?Math.max(.8,prog):0)+'%';$('detailProgressText').textContent=`${fmt(c.votes.length)} of ${fmt(req)} signatures`;$('detailStatusText').textContent=reached?'Threshold reached':'Organizing underway';$('detailStatusPill').textContent=reached?'Petition threshold reached':'Recall campaign underway';$('detailGrounds').textContent=c.reason;$('supportState').value=c.state;$('supportState').dispatchEvent(new Event('change'));$('detailShareBtn').onclick=()=>openShare(c.id);$('detailWhatsAppBtn').onclick=()=>shareWhatsApp(c.id);if(window.Chart){destroyChart('detailCampaign');charts.detailCampaign=new Chart($('detailCampaignChart'),{type:'doughnut',data:{labels:['Signed','Remaining'],datasets:[{data:[c.votes.length,rem]}]},options:{responsive:true,maintainAspectRatio:false}});const pc={};voters.forEach(v=>pc[titleCase(v.pollingUnit)]=(pc[titleCase(v.pollingUnit)]||0)+1);const labs=Object.keys(pc).length?Object.keys(pc):['No signatures'];destroyChart('detailAverage');
     charts.detailAverage=new Chart($('detailAverageChart'),{type:'bar',data:{labels:['Signed petition','2023 avg. voters per PU'],datasets:[{label:'People',data:[c.votes.length,avgPerPU]}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}}}});
 
     destroyChart('detailPolling');charts.detailPolling=new Chart($('detailPollingChart'),{type:'bar',data:{labels:labs,datasets:[{label:'Signatures',data:labs.map(x=>pc[x]||0)}]},options:{responsive:true,maintainAspectRatio:false,indexAxis:'y',plugins:{legend:{display:false}}}})}}
@@ -3093,7 +3339,7 @@ $('detailSupportForm').onsubmit=async e=>{
     showNotification(`Only constituents registered within ${c.constituency} may support this campaign.`,'error','Outside campaign jurisdiction');return
   }
   const voterPayload={name:$('supportName').value.trim(),vin,dob:$('supportDOB').value,phone:$('supportPhone').value.trim(),state:$('supportState').value,lga:$('supportLGA').value,ward:$('supportWard').value,pollingUnit:$('supportPolling').value,signature:supportSignatureData};
-  const {data:voterId,error}=await supabaseClient.rpc('support_campaign',{p_campaign_id:c.id,p_voter:voterPayload});
+  const {data:voterId,error}=await supabaseRpc('support_campaign',{p_campaign_id:c.id,p_voter:voterPayload});
   if(error){
     showNotification(error.code==='23505'?'This VIN has already signed this campaign.':'Your support could not be saved. Please verify the details and try again.','error','Database error');
     return;
@@ -3126,15 +3372,20 @@ function stateRepresentativeSummary(stateKey){
   return [...senate,...house,...assembly];
 }
 
-function initAmChartsNigeriaMap(){if(!window.am5||!window.am5map)return;am5.ready(function(){const root=am5.Root.new('chartdiv');root.setThemes([am5themes_Animated.new(root)]);const chart=root.container.children.push(am5map.MapChart.new(root,{panX:'translateX',panY:'translateY',wheelY:'zoom',projection:am5map.geoMercator()}));const series=chart.series.push(am5map.MapPolygonSeries.new(root,{calculateAggregates:true,valueField:'value'}));series.mapPolygons.template.setAll({tooltipText:'{name}\n{recallStatus}',interactive:true,stroke:am5.color(0xffffff),strokeWidth:1});series.mapPolygons.template.states.create('hover',{fill:am5.color(0x0b6b3a)});series.set('heatRules',[{target:series.mapPolygons.template,dataField:'value',min:am5.color(0xd8eadf),max:am5.color(0x08783f),key:'fill'}]);am5.net.load('https://cdn.amcharts.com/lib/5/geodata/json/nigeriaLow.json',chart).then(result=>{const geo=am5.JSONParser.parse(result.response),campaigns=getData('recallng_campaigns'),sv=stateVoteCounts(),databaseStates=[...new Set([...databaseSenators,...databaseHouseRepresentatives,...databaseStateAssembly].map(r=>r.state))],data=geo.features.map(f=>{const raw=(f.properties.name||'').toLowerCase(),state=databaseStates.find(k=>raw.includes(k)||normalizeWords(raw)===normalizeWords(k))||raw,cs=campaigns.filter(c=>c.state===state);return{id:f.id,value:sv[state]||0,recallStatus:cs.length?cs.map(c=>`${c.representative}: ${c.votes.length}/${threshold(c)} signatures`).join('\n'):'No active recall campaign',stateKey:state}});series.set('geoJSON',geo);series.data.setAll(data);series.mapPolygons.template.events.on('click',ev=>{const d=ev.target.dataItem?.dataContext,c=getData('recallng_campaigns').find(x=>x.state===d?.stateKey);if(c)openCampaignDetail(c.id)});chart.appear(800,100)})})}
-
-function renderAll(){renderStats();renderCampaigns();renderStateSummary();renderCharts();renderLetterOptions()}
+function renderAll(){
+  renderStats();
+  renderCampaigns();
+  renderStateSummary();
+  renderLetterOptions();
+  const activePage=document.querySelector('.page.active')?.id?.replace(/Page$/,'');
+  if(activePage)renderPageVisuals(activePage);
+}
 async function startRecallNG(){
-  try{
-    await Promise.all([loadWinnersDatabase(),loadApplicationData()]);
-  }catch(error){
-    console.error('Supabase load failed:',error);
-    showNotification('RecallNG could not load its Supabase data. Check the connection and reload.','error','Database unavailable');
+  const [winnerResult,dataResult]=await Promise.allSettled([loadWinnersDatabase(),loadApplicationData()]);
+  if(winnerResult.status==='rejected')console.error('Representative database load failed:',winnerResult.reason);
+  if(dataResult.status==='rejected'){
+    console.error('Campaign data load failed:',dataResult.reason);
+    showNotification('Some live campaign data could not be loaded. Check the connection and reload.','error','Database unavailable');
   }
   setTimeout(()=>{if(pollingData.length){populateAllStateControls();}},300);
   setAdultDateLimits();
@@ -3143,8 +3394,6 @@ async function startRecallNG(){
   initCampaignSignature();
   setupCampaignInitiatorSelectors();
   setupSupportSelectors();
-  initAmChartsNigeriaMap();
-  initMap('miniMap');
   renderAll();
   initHeroQuoteSlider();
   initPlatformMotion();
